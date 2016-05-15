@@ -8,15 +8,10 @@ public class Level extends JPanel {
     int maxStappen = 40;                              //maximum aantal stappen
     int maxTijd = 300;                                //maximum tijd in aantal seconden 
     Veld[][] velden = new Veld[BREEDTE][HOOGTE];      //velden in het doolhof
-    Speler speler;                                    //speler object
-    JFrame frame;                                     //frame waar het doolhof op getekend wordt
+    Speler speler;                                    //speler object    
     
-    public Level(JFrame frame) {
-        this.frame = frame;
-    }
-    
-    public void laadDoolhof() {
-        JPanel doolhof = new JPanel();        
+    public void laadDoolhof(JFrame frame) {                
+        JPanel doolhof = new JPanel();
         for (int i=0; i<BREEDTE; i++) {
             for (int j=0; j<HOOGTE; j++) {                
                 velden[i][j] = new Veld(i, j, frame.getWidth()/BREEDTE, "", true);
