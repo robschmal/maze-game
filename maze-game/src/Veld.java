@@ -11,15 +11,11 @@ import javax.swing.JComponent;
  *
  * @author Jorn
  */
-public class Veld extends JComponent {
-    int x, y, hoogteBreedte;
+public class Veld {
     String afbeelding;
     boolean toeganklijk;    
     
-    public Veld(int x, int y, int hoogteBreedte, String afbeelding, boolean toeganklijk) {
-        this.x = x;
-        this.y = y;                
-        this.hoogteBreedte = hoogteBreedte;
+    public Veld(String afbeelding, boolean toeganklijk) {
         this.afbeelding = afbeelding;
         this.toeganklijk = toeganklijk;
     }
@@ -30,10 +26,5 @@ public class Veld extends JComponent {
     
     public boolean getToeganklijk() {
         return toeganklijk;
-    }
-    
-    @Override
-    public void paintComponent(Graphics g) {
-        g.fillRect(x * hoogteBreedte, y * hoogteBreedte, hoogteBreedte, hoogteBreedte);
-    }
+    }        
 }

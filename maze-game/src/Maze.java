@@ -10,24 +10,23 @@ public class Maze {
     static JButton level01 = new JButton("Level 1");
     static JButton level02 = new JButton("Level 2");
     static JButton level03 = new JButton("Level 3");
-    static Veld test = new Veld(0, 0, 50, "", false);
     static Level[] levels = new Level[3];
     
-    public static void main(String[] args) {        
+    public static void main(String[] args) {
+        levels[0] = new Level(frame);
+        levels[1] = new Level(frame);
+        levels[2] = new Level(frame);
+        
         level01.addActionListener(new ClickListener());
         level02.addActionListener(new ClickListener());
-        level03.addActionListener(new ClickListener());
-        levelKeuzes.add(level01);
+        level03.addActionListener(new ClickListener());        
+        levelKeuzes.add(level01);        
         levelKeuzes.add(level02);
         levelKeuzes.add(level03);
-        levelKeuzes.add(test);
-        frame.add(levelKeuzes);
+        frame.add(levelKeuzes);                        
+        frame.add(levels[0]);
         
-        levels[0] = new Level();
-        levels[1] = new Level();
-        levels[2] = new Level();
-        
-        frame.setSize(WIDTH, HEIGHT);
+        frame.setSize(WIDTH, HEIGHT);        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -40,13 +39,13 @@ public class Maze {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == level01) {
-                levels[0].laadDoolhof(frame);
+                frame.add(levels[0]);               
             }
             else if (e.getSource() == level02) {
-                levels[1].laadDoolhof(frame);
+                frame.add(levels[1]);
             }
             else {
-                levels[2].laadDoolhof(frame);
+                frame.add(levels[2]);
             }
         }
     }
