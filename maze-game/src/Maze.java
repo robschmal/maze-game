@@ -13,19 +13,19 @@ public class Maze {
     static Level[] levels = new Level[3];
     
     public static void main(String[] args) {
-        levels[0] = new Level(frame);
-        levels[1] = new Level(frame);
-        levels[2] = new Level(frame);
+        levels[0] = new Level();
+        levels[1] = new Level();
+        levels[2] = new Level();
         
         level01.addActionListener(new ClickListener());
         level02.addActionListener(new ClickListener());
-        level03.addActionListener(new ClickListener());        
+        level03.addActionListener(new ClickListener());
         levelKeuzes.add(level01);        
         levelKeuzes.add(level02);
-        levelKeuzes.add(level03);
-        frame.add(levelKeuzes);                        
-        frame.add(levels[0]);
+        levelKeuzes.add(level03);     
         
+        frame.addKeyListener(new pijltjesToets());        
+        frame.add(levels[0]);        
         frame.setSize(WIDTH, HEIGHT);        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -47,6 +47,41 @@ public class Maze {
             else {
                 frame.add(levels[2]);
             }
+        }
+    }
+    
+    static class pijltjesToets implements KeyListener {
+        Richting richting;
+        @Override
+        public void keyReleased(KeyEvent e) {
+            
+        }
+        
+        @Override
+        public void keyPressed(KeyEvent e) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
+                    richting = Richting.omhoog;
+                break;
+              
+                case KeyEvent.VK_DOWN:
+                    richting = Richting.omlaag;
+                break;
+                    
+                case KeyEvent.VK_LEFT:
+                    richting = Richting.naarLinks;
+                break;
+                    
+                case KeyEvent.VK_RIGHT:
+                    richting = Richting.naarRechts;
+                break;
+            }
+            levels[0].verplaatsSpeler(richting);
+        }
+        
+        @Override
+        public void keyTyped(KeyEvent e) {
+            
         }
     }
 }

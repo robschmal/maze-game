@@ -1,5 +1,4 @@
-import java.awt.Graphics;
-import javax.swing.JComponent;
+import java.awt.Color;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,19 +11,24 @@ import javax.swing.JComponent;
  * @author Jorn
  */
 public class Veld {
-    String afbeelding;
-    boolean toeganklijk;    
+    private final Color KLEUR_TOEGANKLIJK = Color.green;
+    private final Color KLEUR_ONTOEGANKLIJK = Color.gray;
+    private boolean toeganklijk;    
     
-    public Veld(String afbeelding, boolean toeganklijk) {
-        this.afbeelding = afbeelding;
+    public Veld(boolean toeganklijk) {
         this.toeganklijk = toeganklijk;
-    }
-       
-    public String getAfbeelding() {
-        return afbeelding;
     }
     
     public boolean getToeganklijk() {
         return toeganklijk;
+    }
+    
+    public Color getKleur() {
+        if (toeganklijk) {
+            return KLEUR_TOEGANKLIJK;            
+        }
+        else {
+            return KLEUR_ONTOEGANKLIJK;
+        } 
     }        
 }

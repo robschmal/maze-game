@@ -8,5 +8,5 @@
  *
  * @author Jorn
  */
-public enum Richting {omhoog, omlaag, naarlinks, naarRechts};
+public enum Richting {omhoog, omlaag, naarLinks, naarRechts};
 
