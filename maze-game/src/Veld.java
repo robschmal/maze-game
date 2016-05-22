@@ -11,9 +11,9 @@ import java.awt.Color;
  * @author Jorn
  */
 public class Veld {
-    private final Color KLEUR_TOEGANKLIJK = Color.green;
-    private final Color KLEUR_ONTOEGANKLIJK = Color.gray;
-    private boolean toeganklijk;    
+    private final Color KLEUR_TOEGANKLIJK = Color.white;
+    private final Color KLEUR_ONTOEGANKLIJK = Color.lightGray;
+    private final boolean toeganklijk;    
     
     public Veld(boolean toeganklijk) {
         this.toeganklijk = toeganklijk;

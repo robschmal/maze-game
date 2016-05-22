@@ -16,4 +16,9 @@ public class Positie {
         this.x = x;
         this.y = y;
     }
+    
+    public Positie(Positie positie) {
+        x = positie.x;
+        y = positie.y;
+    }
 }
