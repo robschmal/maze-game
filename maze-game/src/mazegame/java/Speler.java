@@ -1,3 +1,5 @@
+package mazegame.java;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +22,7 @@ public class Speler {
     
     public Speler() {
         try {
-            spelerAfbeelding = ImageIO.read(new File("speler.bmp"));
+            spelerAfbeelding = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
         } catch (IOException ex) {
             Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }

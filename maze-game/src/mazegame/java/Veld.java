@@ -1,3 +1,5 @@
+package mazegame.java;
+
 import java.awt.Color;
 
 /*
