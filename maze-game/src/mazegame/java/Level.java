@@ -63,7 +63,7 @@ public class Level extends JComponent {
     public void verplaatsSpeler(Richting richting) {
         Positie positie = new Positie(speler.getPositie()); //inhoud van de positie van de speler kopieeren
                                                             //zodat deze nog niet gelijk wordt aangepast
-        //bepaal de nieuwe positie van de speler (wordt in speler nog niet aangepast)
+        //bepaal de toekomstige positie van de speler
         if (richting == Richting.omhoog && positie.y > 0) {
             positie.y--;
         } else if (richting == Richting.omlaag && positie.y < HOOGTE - 1) {
@@ -90,12 +90,13 @@ public class Level extends JComponent {
                 }                
                 this.repaint();
                     
-                if (positie.x == EIND.x && positie.y == EIND.y) {
+                if (positie.equals(EIND)) {
                     JOptionPane.showOptionDialog(this, "Je hebt het doolhof uitgespeeld!", null, 0, 2, null, new String[]{"OK"}, 0);
                     resetLevel();
                 }
             }
         }
+        //richting waarin de speler staat verandert altijd, ook als hij niet die kant op kan
         speler.setRichting(richting);
     }
     

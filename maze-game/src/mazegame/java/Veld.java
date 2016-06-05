@@ -22,22 +22,9 @@ public class Veld {
     
     public Veld(boolean toeganklijk) {
         this.toeganklijk = toeganklijk; //geeft aan of je op het veld mag staan of niet
-        setAfbeelding();
+        
         //laad de afbeelding van een veld
         //wordt in overerverende klassen overnieuw gedaan
-        
-    }
-    
-    public void setToeganklijk(boolean toeganklijk) {
-        this.toeganklijk = toeganklijk;
-        setAfbeelding();
-    }
-    
-    public boolean getToeganklijk() {
-        return toeganklijk;
-    }
-    
-    private void setAfbeelding() {
         try {
             if (toeganklijk) {
                 //een toeganklijk veld zonder iets bijzonders is een leeg veld
@@ -50,6 +37,14 @@ public class Veld {
         } catch (IOException ex) {
             Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+    }
+    
+    public void setToeganklijk(boolean toeganklijk) {
+        this.toeganklijk = toeganklijk;
+    }
+    
+    public boolean getToeganklijk() {
+        return toeganklijk;
     }
     
     public BufferedImage getAfbeelding() {
