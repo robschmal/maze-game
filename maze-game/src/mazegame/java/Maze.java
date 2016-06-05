@@ -28,7 +28,7 @@ public class Maze {
         levelKeuzes.add(level03);
         levelKeuzes.add(stappen);
         levels[0].resetLevel();
-        toonResterendeStappen(levels[0].berekenResterendeStappen());
+        toonResterendeStappen(levels[0].resterendeStappen());
         
         speelVeld.setLayout(new BorderLayout());
         speelVeld.add(levelKeuzes, BorderLayout.NORTH);        
@@ -55,7 +55,7 @@ public class Maze {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == level01) {
                 levels[0].resetLevel();
-                toonResterendeStappen(levels[0].berekenResterendeStappen());
+                toonResterendeStappen(levels[0].resterendeStappen());
             }
             else if (e.getSource() == level02) {
                 
@@ -76,25 +76,30 @@ public class Maze {
         
         @Override
         public void keyPressed(KeyEvent e) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_UP:
-                    richting = Richting.omhoog;
-                break;
-              
-                case KeyEvent.VK_DOWN:
-                    richting = Richting.omlaag;
-                break;
-                    
-                case KeyEvent.VK_LEFT:
-                    richting = Richting.naarLinks;
-                break;
-                    
-                case KeyEvent.VK_RIGHT:
-                    richting = Richting.naarRechts;
-                break;
+            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                levels[0].schietBazooka();
             }
-            levels[0].verplaatsSpeler(richting);
-            toonResterendeStappen(levels[0].berekenResterendeStappen());            
+            else {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_UP:
+                        richting = Richting.omhoog;
+                    break;
+
+                    case KeyEvent.VK_DOWN:
+                        richting = Richting.omlaag;
+                    break;
+
+                    case KeyEvent.VK_LEFT:
+                        richting = Richting.naarLinks;
+                    break;
+
+                    case KeyEvent.VK_RIGHT:
+                        richting = Richting.naarRechts;                    
+                    break;
+                }
+                levels[0].verplaatsSpeler(richting);
+                toonResterendeStappen(levels[0].resterendeStappen());
+            }
         }
         
         @Override

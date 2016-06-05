@@ -15,30 +15,42 @@ import javax.imageio.ImageIO;
  *
  * @author Jorn
  */
-public class Speler {    
+public class Speler {        
+    private BufferedImage[] spelerAfbeelding = new BufferedImage[4];
     private Positie positie;
-    private int gezetteStappen=0;
-    private BufferedImage spelerAfbeelding;
+    private Richting richting = Richting.omhoog;
+    private int gezetteStappen = 0;
+    private int bazookas = 0;
     
     public Speler() {
         try {
-            spelerAfbeelding = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
+            spelerAfbeelding[0] = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
+            spelerAfbeelding[1] = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
+            spelerAfbeelding[2] = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
+            spelerAfbeelding[3] = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
         } catch (IOException ex) {
             Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
     
+    public BufferedImage getAfbeelding() {
+        return spelerAfbeelding[richting.ordinal()];
+    }
+    
     public void setPositie(Positie positie) {
         this.positie = positie;
-        gezetteStappen++;
     }
     
     public Positie getPositie() {
         return positie;
+    }       
+    
+    public void setRichting(Richting richting) {
+        this.richting = richting;
     }
     
-    public BufferedImage getAfbeelding() {
-        return spelerAfbeelding;
+    public Richting getRichting() {
+        return richting;
     }
     
     public void setGezetteStappen(int gezetteStappen) {
@@ -48,4 +60,12 @@ public class Speler {
     public int getGezetteStappen() {
         return gezetteStappen;
     }
+    
+    public void setBazookas(int bazookas) {
+        this.bazookas = bazookas;
+    }
+    
+    public int getBazookas() {
+        return bazookas;
+    }   
 }

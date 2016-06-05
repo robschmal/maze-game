@@ -1,5 +1,9 @@
 package mazegame.java;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,8 +14,76 @@ package mazegame.java;
  *
  * @author Jorn
  */
-public class Bazooka {
-    public void verwijderMuur(Veld[][] speelveld, Speler speler) {
+public class Bazooka extends SpeciaalVeld {
+    
+    public Bazooka() {
+        super(true); //een veld met een bazooka is altijd toeganklijk
         
+        //laad de afbeelding van een bazooka
+        try {
+            afbeelding = ImageIO.read(new File("src/mazegame/resources/images/bazooka.bmp"));
+        } catch (IOException ex) {
+            Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }
+    
+    @Override
+    public void doeSpecialeActie(Veld[][] speelveld, Speler speler) {
+        //verhoog het aantal bazookas van de speler met één
+        speler.setBazookas(speler.getBazookas() + 1);
+    }
+    
+    static public void schietBazooka(Veld[][] velden, Speler speler, final int BREEDTE, final int HOOGTE) {
+        if (speler.getBazookas() > 0) {
+            int begin = 0, eind = 0, stap = 0;
+            Positie positie = speler.getPositie();
+            speler.setBazookas(speler.getBazookas() - 1);            
+            
+            //bepaal begin en eind van de rij velden waarin je op en muur schiet
+            switch (speler.getRichting()) {
+                case omhoog:
+                    begin = positie.y - 1;  //y positie van de speler
+                    eind = 0;                           //bovenkant van het speelveld
+                    stap = -1;                          //je schiet omhoog, dus y wordt minder
+                break;
+                    
+                case omlaag:
+                    begin = positie.y + 1;  //y psoitie van de speler
+                    eind = HOOGTE;                      //onderkant van het speelveld
+                    stap = 1;                           //je schiet omlaag, dus y wordt meer
+                break;
+                    
+                case naarLinks:
+                    begin = positie.x - 1;  //x positie van de speler
+                    eind = 0;                           //linkerkant van het speelveld
+                    stap = -1;                          //je schiet naar links, dus x wordt minder
+                break;
+                    
+                case naarRechts:
+                    begin = positie.x + 1;  //x positie van de speler
+                    eind = BREEDTE;                     //rechterkant van het speelveld
+                    stap = 1;                           //je schiet naar rechts, dus x wordt meer
+                break;                 
+            }
+            
+            //ga deze rij velden af tot je een muur tegenkomt
+            //de loop stopt wanneer je één stap voorbij het eind bent
+            for (int n=begin; n!=eind+stap; n+=stap) {
+                //als je omhoog of omlaag schiet verander je de y positie, x blijft constant
+                if ((speler.getRichting() == Richting.omhoog || speler.getRichting() == Richting.omlaag)
+                    && velden[n][positie.x].getToeganklijk() == false) {
+                    //als je een veld tegenkomt dat niet toeganklijk is dan is dat een muur en gaat deze weg
+                    velden[n][positie.x].setToeganklijk(true);
+                    break;
+                }
+                //als je naar links of naar rechts schiet verander je de x positie, y blijft constant
+                else if ((speler.getRichting() == Richting.naarLinks || speler.getRichting() == Richting.naarRechts)
+                    && velden[positie.y][n].getToeganklijk() == false) {
+                    velden[positie.y][n].setToeganklijk(true);
+                    break;
+                }
+            }
+            
+        }
     }
 }
