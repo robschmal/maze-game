@@ -30,7 +30,7 @@ public class Bazooka extends SpeciaalVeld {
     @Override
     public void doeSpecialeActie(Veld[][] speelveld, Speler speler) {
         //verhoog het aantal bazookas van de speler met één
-        speler.setBazookas(speler.getBazookas() + 1);
+        speler.setAantalBazookas(speler.getAantalBazookas() + 1);
         
         //speciale dingen kan je maar één keer gebruiken dus vervang deze door een leeg veld als de speler er op is geweest 
         speelveld[speler.getPositie().y][speler.getPositie().x] = new Veld(true);
@@ -39,10 +39,10 @@ public class Bazooka extends SpeciaalVeld {
     //static functie zodat je deze op de klasse aan kan roepen
     //een bazooka kan je immers pas later gebruiken als je al niet meer op het bazooka veld bent
     static public void schietBazooka(Veld[][] velden, Speler speler, final int BREEDTE, final int HOOGTE) {
-        if (speler.getBazookas() > 0) {                     //als de speler bazooka's heeft
+        if (speler.getAantalBazookas() > 0) {                     //als de speler bazooka's heeft
             int begin = 0, eind = 0, stap = 0;
             Positie spelerPositie = speler.getPositie();    //variabele om niet steeds opnieuw speler.getPositie aan te hoeven roepen
-            speler.setBazookas(speler.getBazookas() - 1);   //verminder het aantal bazooka's van de speler met één
+            speler.setAantalBazookas(speler.getAantalBazookas() - 1);   //verminder het aantal bazooka's van de speler met één
             
             //bepaal begin en eind van de rij velden waarin je op en muur schiet
             switch (speler.getRichting()) {

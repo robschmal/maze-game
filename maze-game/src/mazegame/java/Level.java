@@ -61,43 +61,45 @@ public class Level extends JComponent {
     }
 
     public void verplaatsSpeler(Richting richting) {
-        Positie positie = new Positie(speler.getPositie()); //inhoud van de positie van de speler kopieeren
-                                                            //zodat deze nog niet gelijk wordt aangepast
-        //bepaal de toekomstige positie van de speler
-        if (richting == Richting.omhoog && positie.y > 0) {
-            positie.y--;
-        } else if (richting == Richting.omlaag && positie.y < HOOGTE - 1) {
-            positie.y++;
-        } else if (richting == Richting.naarLinks && positie.x > 0) {
-            positie.x--;
-        } else if (richting == Richting.naarRechts && positie.x < BREEDTE - 1) {
-            positie.x++;
-        } else {
-            return;
-        }
-
-        //bepaal of je naar dat veld toe mag en wat er gebeurt als je daar op gaat staan
-        if (velden[positie.y][positie.x].getToeganklijk()) {
-            if (speler.getGezetteStappen() == MAX_STAPPEN) {
-                JOptionPane.showOptionDialog(this, "Je mag niet meer stappen zetten!", null, 0, 2, null, new String[]{"OK"}, 0);
+        //als de speler geen stappen meer mag zetten of als hij aan de rand van het level is gebeurt er niks
+        if (speler.getGezetteStappen() < MAX_STAPPEN) {
+            Positie positie = new Positie(speler.getPositie()); //inhoud van de positie van de speler kopieeren
+                                                                //zodat deze nog niet gelijk wordt aangepast
+            //bepaal je toekomstige positie mits er in de gewenste richting nog een veld is
+            if (richting == Richting.omhoog && positie.y > 0) {
+                positie.y--;
+            } else if (richting == Richting.omlaag && positie.y < HOOGTE - 1) {
+                positie.y++;
+            } else if (richting == Richting.naarLinks && positie.x > 0) {
+                positie.x--;
+            } else if (richting == Richting.naarRechts && positie.x < BREEDTE - 1) {
+                positie.x++;
+            } else {
+                return;
             }
-            else {
+
+            //bepaal of je naar dat veld toe mag en wat er gebeurt als je daar op gaat staan
+            if (velden[positie.y][positie.x].getToeganklijk()) {            
                 speler.setPositie(positie);                
                 speler.setGezetteStappen(speler.getGezetteStappen() + 1);
                 //als het volgende veld geen gewoon veld is, doe de speciale actie
                 if (!(velden[positie.y][positie.x].getClass().equals(Veld.class))) {
                     ((SpeciaalVeld) velden[positie.y][positie.x]).doeSpecialeActie(velden, speler);
                 }                
-                this.repaint();
-                    
+                //geef een melding als de speler bij het eind van het level is of als zijn stappen op zijn
                 if (positie.equals(EIND)) {
                     JOptionPane.showOptionDialog(this, "Je hebt het doolhof uitgespeeld!", null, 0, 2, null, new String[]{"OK"}, 0);
                     resetLevel();
                 }
+                else if (speler.getGezetteStappen() == MAX_STAPPEN) {
+                    JOptionPane.showOptionDialog(this, "Je mag niet meer stappen zetten!", null, 0, 2, null, new String[]{"OK"}, 0);
+                } 
             }
+            //richting waarin je staat verandert altijd, ook als je niet naar dat veld toe kan
+            //zo kan je je bazooka op een muur richting waar je al tegenaan staat
+            speler.setRichting(richting);
+            this.repaint();
         }
-        //richting waarin de speler staat verandert altijd, ook als hij niet die kant op kan
-        speler.setRichting(richting);
     }
     
     public void schietBazooka() {
@@ -105,14 +107,19 @@ public class Level extends JComponent {
         this.repaint();
     }
 
-    public int resterendeStappen() {
+    public int getResterendeStappen() {
         //maximum stappen en resterende stappen is iets van het level, gezette stappen iets van de speler
         return MAX_STAPPEN - speler.getGezetteStappen();
+    }
+    
+    public int getAantalBazookas() {
+        return speler.getAantalBazookas();
     }
     
     public void resetLevel() {
         speler.setPositie(BEGIN);
         speler.setGezetteStappen(0);
+        speler.setAantalBazookas(0);
         this.repaint();
     }
 

@@ -1,5 +1,6 @@
 package mazegame.java;
-
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,25 +17,24 @@ import javax.imageio.ImageIO;
  * @author Jorn
  */
 public class Speler {        
-    private BufferedImage[] spelerAfbeelding = new BufferedImage[4];
-    private Positie positie;
-    private Richting richting = Richting.omhoog;
-    private int gezetteStappen = 0;
-    private int bazookas = 0;
+    private BufferedImage spelerAfbeelding;
+    private Positie positie = new Positie();
+    private Richting richting = Richting.omlaag;
+    private int gezetteStappen;
+    private int bazookas;
     
     public Speler() {
         try {
-            spelerAfbeelding[0] = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
-            spelerAfbeelding[1] = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
-            spelerAfbeelding[2] = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
-            spelerAfbeelding[3] = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
+            spelerAfbeelding = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
         } catch (IOException ex) {
             Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
     
     public BufferedImage getAfbeelding() {
-        return spelerAfbeelding[richting.ordinal()];
+        AffineTransform rotatie = new AffineTransform();
+        rotatie.rotate(richting.ordinal() * 0.5 * Math.PI, spelerAfbeelding.getWidth()/2, spelerAfbeelding.getHeight()/2);
+        return new AffineTransformOp(rotatie, AffineTransformOp.TYPE_BILINEAR).filter(spelerAfbeelding, null);
     }
     
     public void setPositie(Positie positie) {
@@ -61,11 +61,11 @@ public class Speler {
         return gezetteStappen;
     }
     
-    public void setBazookas(int bazookas) {
+    public void setAantalBazookas(int bazookas) {
         this.bazookas = bazookas;
     }
     
-    public int getBazookas() {
+    public int getAantalBazookas() {
         return bazookas;
     }   
 }

@@ -14,6 +14,7 @@ public class Maze {
     static JButton level02 = new JButton("Level 2");
     static JButton level03 = new JButton("Level 3");
     static JLabel stappen = new JLabel("Resterende stappen:");
+    static JLabel bazookas = new JLabel("Bazooka's:");
     static Level[] levels = new Level[3];
     
     public static void main(String[] args) {
@@ -22,13 +23,16 @@ public class Maze {
         levels[2] = new Level();        
         level01.addActionListener(new ClickListener());
         level02.addActionListener(new ClickListener());
-        level03.addActionListener(new ClickListener());        
+        level03.addActionListener(new ClickListener());
+        
         levelKeuzes.add(level01);
         levelKeuzes.add(level02);
         levelKeuzes.add(level03);
         levelKeuzes.add(stappen);
+        levelKeuzes.add(bazookas);
+        
         levels[0].resetLevel();
-        toonResterendeStappen(levels[0].resterendeStappen());
+        toonSpelerStatus();
         
         speelVeld.setLayout(new BorderLayout());
         speelVeld.add(levelKeuzes, BorderLayout.NORTH);        
@@ -45,8 +49,34 @@ public class Maze {
         while(true) {}
     }
     
-    static private void toonResterendeStappen(int aantalStappen) {
-        stappen.setText("Je mag nog " + Integer.toString(aantalStappen) + " stappen zetten");
+    static private void toonSpelerStatus() {
+        switch (levels[0].getResterendeStappen()) {
+            case 0:
+                stappen.setText("  Je hebt geen stappen meer over!  ");
+            break;
+                
+            case 1:
+                stappen.setText("  Je mag nog maar één stap zetten!  ");
+            break;
+                
+            default:
+                stappen.setText("  Je mag nog " + Integer.toString(levels[0].getResterendeStappen()) + " stappen zetten  ");
+            break;    
+        }
+        
+        switch (levels[0].getAantalBazookas()) {
+            case 0:
+                bazookas.setText("Je hebt geen bazooka's");
+            break;
+                
+            case 1:
+                bazookas.setText("Je hebt één bazooka");
+            break;
+                
+            default:
+                bazookas.setText("Je hebt " + Integer.toString(levels[0].getAantalBazookas()) + " bazooka's");
+            break;
+        }       
     }
     
     static class ClickListener implements ActionListener {
@@ -55,7 +85,7 @@ public class Maze {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == level01) {
                 levels[0].resetLevel();
-                toonResterendeStappen(levels[0].resterendeStappen());
+                toonSpelerStatus();
             }
             else if (e.getSource() == level02) {
                 
@@ -97,9 +127,9 @@ public class Maze {
                         richting = Richting.naarRechts;                    
                     break;
                 }
-                levels[0].verplaatsSpeler(richting);
-                toonResterendeStappen(levels[0].resterendeStappen());
+                levels[0].verplaatsSpeler(richting);                
             }
+            toonSpelerStatus();
         }
         
         @Override

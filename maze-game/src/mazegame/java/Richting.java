@@ -10,5 +10,5 @@ package mazegame.java;
  *
  * @author Jorn
  */
-public enum Richting {omhoog, omlaag, naarLinks, naarRechts};
+public enum Richting {omlaag, naarLinks, omhoog, naarRechts};
 
