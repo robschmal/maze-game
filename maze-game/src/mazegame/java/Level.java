@@ -1,6 +1,7 @@
 package mazegame.java;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class Level extends JComponent {
@@ -10,54 +11,71 @@ public class Level extends JComponent {
     private final Positie EIND = new Positie(BREEDTE - 1, HOOGTE - 1);
     private final int MAX_STAPPEN = 70;
     private final int MAX_TIJD = 300;       
-    private final String LEVEL =   "RRmmmmmmmmmmmmmmRRRmRRRRRRRRRRRRRRR"
-                                 + "mRmmmmmmmRRRRRRmRmRmRmmmmmmmRmmmmmm"
-                                 + "mRRRRRRRmRmmmmRmmmRmRmmmRRRRRmmRRRm"
-                                 + "mRmmmmmRmRRBRmRRRRRmRmmmRmmmmmmRmmm"
-                                 + "mRRRRRmRmmmmRmmmmmmmRmmmRRRRRRRRmmm"
-                                 + "mmmmmRmRRRRRRmRRRRRRRmmmmmmmmRmmmmm"
-                                 + "mRRRmRmRmmmmmmRmmmRmmmmmmRRRRRmmmmm"
-                                 + "mRmRVRmRRRRHRRRmmmRRRRRmmRmmmmmmmmm"
-                                 + "mRmmmmmmmmmmmmmmmmmmmmRRRRRRRRRRRmm"
-                                 + "mRmRRRRRmmRRRRRRRRmmmmRmmmmmmmmmRmm"
-                                 + "mRmmmmmRmmRmmmmRmRRRRRRmmmmmmmmmRmm"
-                                 + "mRRRRRRRRRRmRRRRmRmmRmmmmRRRRRRRRmm"
-                                 + "mmmmmmmmmmmmRmmmmRmmRmmmmRmmmmmmRmm"
-                                 + "RRRRRRRRRRRmRRRRmRmmRRRRRRRRmmmmRmm"
-                                 + "RmmmmmmmmmRmmmmRmRmmmmmmmmmRmmmmRmm"
-                                 + "RRRRRRRmmmRRRRRRmRmmmmmmmmmRRRRRRmm"
-                                 + "mmmmmmRmmmmmmmmmmRRRRRRRRmmmmmmmmmm"
-                                 + "mmmmmmRRRRRRRRRRmmmmmmmmRRRRRRRRRRR";    
+    private final String LEVEL =   "RRmmmmmmmmmmmmmmrrrmrrrrrrrrrrrrrrr"
+                                 + "mRmmmmmmmrrrrrrrrmHmrmmmmmmmrmmmmmm"
+                                 + "mRRRRRRRmrmmmmrmmmrmrmmmrrrrrmmrrrm"
+                                 + "mrmmmmmRmrrBrmrrrrrmrmmmrmmmmmmrmmm"
+                                 + "mrrrrrmRmmmmrmmmmmmmrmmmrrrrrrrrmmm"
+                                 + "mmmmmrmRrrrrrmRRRRRrrmmmmmmmmrmmmmm"
+                                 + "mrrrmrmRmmmmmmRmmmRmmmmmmrrrrrmmmmm"
+                                 + "mrmrVrmRRRRRRRRmmmRRRRRmmrmmmmmmmmm"
+                                 + "mrmmmmmmmmmmmmmmmmmmmmRrrrrrrrrrrmm"
+                                 + "mrmrrrrrmmrrrrrrrrmmmmRmmmmmmmmmrmm"
+                                 + "mrmmmmmrmmrmmmmrmRRRRRRmmmmmmmmmrmm"
+                                 + "mrrrrrrrrrrmrrrrmRmmrmmmmrrrrrrrrmm"
+                                 + "mmmmmmmmmmmmrmmmmRmmrmmmmrmmmmmmrmm"
+                                 + "rrrrrrrrrrrmrrrrmRmmrrrrrrrrmmmmrmm"
+                                 + "rmmmmmmmmmrmmmmrmRmmmmmmmmmrmmmmrmm"
+                                 + "rrrrrrrmmmrrrrrrmRmmmmmmmmmrrrrrrmm"
+                                 + "mmmmmmrmmmmmmmmmmRRRRRRRRmmmmmmmmmm"
+                                 + "mmmmmmrrrrrrrrrrmmmmmmmmRRRRRRRRRRR";    
     private final Speler speler;
-    private final Veld[][] velden = new Veld[HOOGTE][BREEDTE];
+    private final Veld[][] speelveld = new Veld[HOOGTE][BREEDTE];
 
     public Level() {
         speler = new Speler();
+        ArrayList<Veld> optimaleRoute = new ArrayList<>();
+        ArrayList<Helper> helpers = new ArrayList<>();
         for (int y=0; y<HOOGTE; y++) {
             for (int x=0; x<BREEDTE; x++) {
                 switch (LEVEL.charAt((y * BREEDTE) + x)) {
                     case 'R':
-                        velden[y][x] = new Veld(true);
+                        //bij een hoofdletter r, voeg de positie van het veld toe aan de optimale route
+                        speelveld[y][x] = new Veld(true);
+                        optimaleRoute.add(speelveld[y][x]);
+                    break;
+                        
+                    case 'r':
+                        speelveld[y][x] = new Veld(true);
                     break;
                     
                     case 'B':
-                        velden[y][x] = new Bazooka();
+                        speelveld[y][x] = new Bazooka();
                     break;
                         
                     case 'H':
-                        velden[y][x] = new Helper();
+                        //voeg helpers toe aan de lijst met helpers
+                        speelveld[y][x] = new Helper();
+                        helpers.add((Helper) speelveld[y][x]);
                     break;
                         
                     case 'V':
-                        velden[y][x] = new Valsspeler();
+                        speelveld[y][x] = new Valsspeler();
                     break;                                               
                         
                     default:
-                        velden[y][x] = new Veld(false); //standaard een leeg veld waar je niet op mag
+                        speelveld[y][x] = new Veld(false); //standaard een leeg veld waar je niet op mag
                     break;                        
                 }                
             }
-        }        
+        }
+        
+        //stel alle helpers op de hoogte van de optimale route
+        //kan pas aan het eind omdat dan de hele optimale route bekend is
+        //wat doorgegeven wordt zijn pointers naar de veld objecten in speelveld
+        for (Helper helper : helpers) {
+            helper.setOptimaleRoute(optimaleRoute);
+        }
     }
 
     public void verplaatsSpeler(Richting richting) {
@@ -79,12 +97,12 @@ public class Level extends JComponent {
             }
 
             //bepaal of je naar dat veld toe mag en wat er gebeurt als je daar op gaat staan
-            if (velden[positie.y][positie.x].getToeganklijk()) {            
+            if (speelveld[positie.y][positie.x].getToeganklijk()) {            
                 speler.setPositie(positie);                
                 speler.setGezetteStappen(speler.getGezetteStappen() + 1);
                 //als het volgende veld geen gewoon veld is, doe de speciale actie
-                if (!(velden[positie.y][positie.x].getClass().equals(Veld.class))) {
-                    ((SpeciaalVeld) velden[positie.y][positie.x]).doeSpecialeActie(velden, speler);
+                if (!(speelveld[positie.y][positie.x].getClass().equals(Veld.class))) {
+                    ((SpeciaalVeld) speelveld[positie.y][positie.x]).doeSpecialeActie(speelveld, speler, this);
                 }                
                 //geef een melding als de speler bij het eind van het level is of als zijn stappen op zijn
                 if (positie.equals(EIND)) {
@@ -103,7 +121,7 @@ public class Level extends JComponent {
     }
     
     public void schietBazooka() {
-        Bazooka.schietBazooka(velden, speler, BREEDTE, HOOGTE);
+        Bazooka.schietBazooka(speelveld, speler, BREEDTE, HOOGTE);
         this.repaint();
     }
 
@@ -122,6 +140,10 @@ public class Level extends JComponent {
         speler.setAantalBazookas(0);
         this.repaint();
     }
+    
+    public void verzoekRepaint() {
+        this.repaint();
+    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -132,7 +154,7 @@ public class Level extends JComponent {
                     g.drawImage(speler.getAfbeelding(), x * AFMETING + MARGE, y * AFMETING, this);
                 } else {
                     //teken anders de afbeelding van het veld
-                    g.drawImage(velden[y][x].getAfbeelding(), x * AFMETING + MARGE, y * AFMETING, this);
+                    g.drawImage(speelveld[y][x].getAfbeelding(), x * AFMETING + MARGE, y * AFMETING, this);
                 }                
             }
         }

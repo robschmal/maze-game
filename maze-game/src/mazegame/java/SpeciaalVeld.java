@@ -15,7 +15,7 @@ public abstract class SpeciaalVeld extends Veld {
     
     public SpeciaalVeld(boolean toeganklijk) {
         super(toeganklijk);
-    }
+    }   
     
-    public abstract void doeSpecialeActie(Veld[][] velden, Speler speler);
+    public abstract void doeSpecialeActie(Veld[][] velden, Speler speler, Level level);       
 }

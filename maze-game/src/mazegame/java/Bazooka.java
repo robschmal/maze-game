@@ -28,7 +28,7 @@ public class Bazooka extends SpeciaalVeld {
     }
     
     @Override
-    public void doeSpecialeActie(Veld[][] speelveld, Speler speler) {
+    public void doeSpecialeActie(Veld[][] speelveld, Speler speler, Level level) {
         //verhoog het aantal bazookas van de speler met één
         speler.setAantalBazookas(speler.getAantalBazookas() + 1);
         
@@ -37,11 +37,11 @@ public class Bazooka extends SpeciaalVeld {
     }
     
     //static functie zodat je deze op de klasse aan kan roepen
-    //een bazooka kan je immers pas later gebruiken als je al niet meer op het bazooka veld bent
+    //een bazooka kan je immers pas later gebruiken als je al niet meer op het bazooka veld bent en geen bazooka object voorhanden hebt
     static public void schietBazooka(Veld[][] velden, Speler speler, final int BREEDTE, final int HOOGTE) {
-        if (speler.getAantalBazookas() > 0) {                     //als de speler bazooka's heeft
+        if (speler.getAantalBazookas() > 0) {                           //als de speler bazooka's heeft
             int begin = 0, eind = 0, stap = 0;
-            Positie spelerPositie = speler.getPositie();    //variabele om niet steeds opnieuw speler.getPositie aan te hoeven roepen
+            Positie spelerPositie = speler.getPositie();                //variabele om niet steeds opnieuw speler.getPositie aan te hoeven roepen
             speler.setAantalBazookas(speler.getAantalBazookas() - 1);   //verminder het aantal bazooka's van de speler met één
             
             //bepaal begin en eind van de rij velden waarin je op en muur schiet
@@ -72,7 +72,7 @@ public class Bazooka extends SpeciaalVeld {
             }
             
             //ga deze rij velden af tot je een muur tegenkomt
-            //de loop stopt wanneer je bij een muur of één stap voorbij het eind bent
+            //de loop stopt wanneer je bij een muur of één stap voorbij het eind bent (eind zelf moet ook worden bekeken)
             for (int n=begin; n!=eind+stap; n+=stap) {
                 //als je omhoog of omlaag schiet verander je de y positie, x blijft constant
                 if ((speler.getRichting() == Richting.omhoog || speler.getRichting() == Richting.omlaag)

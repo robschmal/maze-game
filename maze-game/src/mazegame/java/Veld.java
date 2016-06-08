@@ -39,15 +39,19 @@ public class Veld {
         }
     }
     
+    public void setAfbeelding(BufferedImage afbeelding) {
+        this.afbeelding = afbeelding;
+    }
+    
+    public BufferedImage getAfbeelding() {
+        return afbeelding;
+    } 
+    
     public void setToeganklijk(boolean toeganklijk) {
         this.toeganklijk = toeganklijk;
     }
     
     public boolean getToeganklijk() {
         return toeganklijk;
-    }
-    
-    public BufferedImage getAfbeelding() {
-        return afbeelding;
-    }       
+    }              
 }

@@ -8,14 +8,15 @@ public class Maze {
     
     private static final int WIDTH = 1250;
     private static final int HEIGHT = 700;
-    static JFrame frame = new JFrame("Doolhofspel");
-    static JPanel levelKeuzes = new JPanel(), speelVeld = new JPanel();
+    static JFrame frame = new JFrame("Maze game");
+    static JPanel frameBovenin = new JPanel();
     static JButton level01 = new JButton("Level 1");
     static JButton level02 = new JButton("Level 2");
     static JButton level03 = new JButton("Level 3");
-    static JLabel stappen = new JLabel("Resterende stappen:");
-    static JLabel bazookas = new JLabel("Bazooka's:");
+    static JLabel stappen = new JLabel();
+    static JLabel bazookas = new JLabel();
     static Level[] levels = new Level[3];
+    static Level level = new Level();
     
     public static void main(String[] args) {
         levels[0] = new Level();
@@ -25,32 +26,31 @@ public class Maze {
         level02.addActionListener(new ClickListener());
         level03.addActionListener(new ClickListener());
         
-        levelKeuzes.add(level01);
-        levelKeuzes.add(level02);
-        levelKeuzes.add(level03);
-        levelKeuzes.add(stappen);
-        levelKeuzes.add(bazookas);
+        frameBovenin.add(level01);
+        frameBovenin.add(level02);
+        frameBovenin.add(level03);
+        frameBovenin.add(stappen);
+        frameBovenin.add(bazookas);
+       
+        frame.add(frameBovenin, BorderLayout.NORTH);        
+        frame.add(levels[0], BorderLayout.CENTER);
         
-        levels[0].resetLevel();
-        toonSpelerStatus();
-        
-        speelVeld.setLayout(new BorderLayout());
-        speelVeld.add(levelKeuzes, BorderLayout.NORTH);        
-        speelVeld.add(levels[0], BorderLayout.CENTER);
-        
-        frame.addKeyListener(new pijltjesToets());        
-        frame.add(speelVeld);
+        frame.addKeyListener(new pijltjesToets());
         frame.setSize(WIDTH, HEIGHT);        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setVisible(true);              
         frame.setLocationRelativeTo(null);
         frame.requestFocus();
+        
+        level = levels[0];
+        level.resetLevel();
+        toonSpelerStatus();
         while(true) {}
     }
     
     static private void toonSpelerStatus() {
-        switch (levels[0].getResterendeStappen()) {
+        switch (level.getResterendeStappen()) {
             case 0:
                 stappen.setText("  Je hebt geen stappen meer over!  ");
             break;
@@ -64,7 +64,7 @@ public class Maze {
             break;    
         }
         
-        switch (levels[0].getAantalBazookas()) {
+        switch (level.getAantalBazookas()) {
             case 0:
                 bazookas.setText("Je hebt geen bazooka's");
             break;
@@ -84,8 +84,7 @@ public class Maze {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == level01) {
-                levels[0].resetLevel();
-                toonSpelerStatus();
+                                
             }
             else if (e.getSource() == level02) {
                 
@@ -93,6 +92,8 @@ public class Maze {
             else {
                 
             }
+            level.resetLevel();
+            toonSpelerStatus();
             frame.requestFocus();
         }
     }
@@ -107,7 +108,7 @@ public class Maze {
         @Override
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                levels[0].schietBazooka();
+                level.schietBazooka();
             }
             else {
                 switch (e.getKeyCode()) {
@@ -127,7 +128,7 @@ public class Maze {
                         richting = Richting.naarRechts;                    
                     break;
                 }
-                levels[0].verplaatsSpeler(richting);                
+                level.verplaatsSpeler(richting);                
             }
             toonSpelerStatus();
         }

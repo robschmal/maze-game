@@ -1,7 +1,10 @@
 package mazegame.java;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 /*
@@ -15,7 +18,8 @@ import javax.imageio.ImageIO;
  * @author Jorn
  */
 public class Helper extends SpeciaalVeld {
-    Veld[] optimaleRoute = new Veld[30];
+    //lijst met de velden die de optimale route vormen
+    ArrayList<Veld> optimaleRoute = new ArrayList<>();
     
     public Helper() {
         super(true); //een veld met een helper is altijd toeganklijk
@@ -29,7 +33,36 @@ public class Helper extends SpeciaalVeld {
     }
     
     @Override
-    public void doeSpecialeActie(Veld[][] speelveld, Speler speler) {
+    public void doeSpecialeActie(Veld[][] speelveld, Speler speler, Level level) {
+        BufferedImage veldAfbeelding;
+        //speciale dingen kan je maar één keer gebruiken dus vervang deze door een leeg veld als de speler er op is geweest 
+        speelveld[speler.getPositie().y][speler.getPositie().x] = new Veld(true);
         
+        //van elk veld op de optimale route wordt de afbeelding opgehaald, aangepast en teruggezet
+        //de afbeelding van het veld krijgt een rand in een kleur naar keuze
+        for (Veld veld : optimaleRoute) {
+            veldAfbeelding = veld.getAfbeelding();            
+            for (int x=0; x<veldAfbeelding.getWidth(); x++) {            
+                //aan de meest linker en meest rechter zijde worden alle pixels
+                //van boven naar beneden gekleurd, zodat je de linker en rechter rand krijgt
+                if (x == 0 || x == veldAfbeelding.getWidth()-1) {
+                    for (int y=0; y<veldAfbeelding.getHeight(); y++) {
+                        veldAfbeelding.setRGB(x, y, Color.green.getRGB());
+                    }
+                }
+                //daartussenin worden alleen de bovenste en onderste pixel gekleurd, zodat je
+                //uiteindelijk de boven en onder rand krijgt
+                else {
+                    veldAfbeelding.setRGB(x, 0, Color.green.getRGB());
+                    veldAfbeelding.setRGB(x, veldAfbeelding.getHeight()-1, Color.green.getRGB());
+                }
+            }
+            veld.setAfbeelding(veldAfbeelding);
+        }
+        level.verzoekRepaint();
+    }
+    
+    public void setOptimaleRoute(ArrayList<Veld> optimaleRoute) {
+        this.optimaleRoute = optimaleRoute;
     }
 }

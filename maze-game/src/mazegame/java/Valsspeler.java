@@ -29,7 +29,7 @@ public class Valsspeler extends SpeciaalVeld {
     }
     
     @Override
-    public void doeSpecialeActie(Veld[][] speelveld, Speler speler) {
+    public void doeSpecialeActie(Veld[][] speelveld, Speler speler, Level level) {
         //verminder het aantal gezette stappen van de speler met de waarde van de valsspeler
         if (speler.getGezetteStappen() >= waarde) {
             speler.setGezetteStappen(speler.getGezetteStappen()-waarde);
