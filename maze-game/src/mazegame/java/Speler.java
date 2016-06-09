@@ -41,6 +41,11 @@ public class Speler {
         this.positie = positie;
     }
     
+    public void setPositie(int x, int y) {
+        positie.x = x;
+        positie.y = y;
+    }
+    
     public Positie getPositie() {
         return positie;
     }       

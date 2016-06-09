@@ -64,7 +64,7 @@ public class Maze {
             break;    
         }
         
-        switch (level.getAantalBazookas()) {
+        switch (level.getSpelerZijnAantalBazookas()) {
             case 0:
                 bazookas.setText("Je hebt geen bazooka's");
             break;
@@ -74,7 +74,7 @@ public class Maze {
             break;
                 
             default:
-                bazookas.setText("Je hebt " + Integer.toString(levels[0].getAantalBazookas()) + " bazooka's");
+                bazookas.setText("Je hebt " + Integer.toString(levels[0].getSpelerZijnAantalBazookas()) + " bazooka's");
             break;
         }       
     }

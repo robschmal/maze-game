@@ -9,13 +9,7 @@ package mazegame.java;
  *
  * @author Jorn
  */
-//abstracte tussenklasse tussen Veld en Bazooka, Helper en Valsspeler
-//om te zorgen dat deze drie doeSpecialeActie implementeren maar Veld zelf niet
-public abstract class SpeciaalVeld extends Veld {
+public interface SpeciaalVeld {
     
-    public SpeciaalVeld(boolean toeganklijk) {
-        super(toeganklijk);
-    }   
-    
-    public abstract void doeSpecialeActie(Veld[][] velden, Speler speler, Level level);       
+    public void doeSpecialeActie(Speler speler);
 }

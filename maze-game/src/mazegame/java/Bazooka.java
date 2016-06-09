@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
  *
  * @author Jorn
  */
-public class Bazooka extends SpeciaalVeld {
+public class Bazooka extends Veld implements SpeciaalVeld {
     
     public Bazooka() {
         super(true); //een veld met een bazooka is altijd toeganklijk
@@ -28,12 +28,9 @@ public class Bazooka extends SpeciaalVeld {
     }
     
     @Override
-    public void doeSpecialeActie(Veld[][] speelveld, Speler speler, Level level) {
+    public void doeSpecialeActie(Speler speler) {
         //verhoog het aantal bazookas van de speler met één
         speler.setAantalBazookas(speler.getAantalBazookas() + 1);
-        
-        //speciale dingen kan je maar één keer gebruiken dus vervang deze door een leeg veld als de speler er op is geweest 
-        speelveld[speler.getPositie().y][speler.getPositie().x] = new Veld(true);
     }
     
     //static functie zodat je deze op de klasse aan kan roepen

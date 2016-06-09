@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
  *
  * @author Jorn
  */
-public class Valsspeler extends SpeciaalVeld {
+public class Valsspeler extends Veld implements SpeciaalVeld {
     int waarde = 10;
     
     public Valsspeler() {
@@ -29,7 +29,7 @@ public class Valsspeler extends SpeciaalVeld {
     }
     
     @Override
-    public void doeSpecialeActie(Veld[][] speelveld, Speler speler, Level level) {
+    public void doeSpecialeActie(Speler speler) {
         //verminder het aantal gezette stappen van de speler met de waarde van de valsspeler
         if (speler.getGezetteStappen() >= waarde) {
             speler.setGezetteStappen(speler.getGezetteStappen()-waarde);

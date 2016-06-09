@@ -81,31 +81,34 @@ public class Level extends JComponent {
     public void verplaatsSpeler(Richting richting) {
         //als de speler geen stappen meer mag zetten of als hij aan de rand van het level is gebeurt er niks
         if (speler.getGezetteStappen() < MAX_STAPPEN) {
-            Positie positie = new Positie(speler.getPositie()); //inhoud van de positie van de speler kopieeren
-                                                                //zodat deze nog niet gelijk wordt aangepast
+            int x = speler.getPositie().x;
+            int y = speler.getPositie().y;
+            
             //bepaal je toekomstige positie mits er in de gewenste richting nog een veld is
-            if (richting == Richting.omhoog && positie.y > 0) {
-                positie.y--;
-            } else if (richting == Richting.omlaag && positie.y < HOOGTE - 1) {
-                positie.y++;
-            } else if (richting == Richting.naarLinks && positie.x > 0) {
-                positie.x--;
-            } else if (richting == Richting.naarRechts && positie.x < BREEDTE - 1) {
-                positie.x++;
+            if (richting == Richting.omhoog && y > 0) {
+                y--;
+            } else if (richting == Richting.omlaag && y < HOOGTE - 1) {
+                y++;
+            } else if (richting == Richting.naarLinks && x > 0) {
+                x--;
+            } else if (richting == Richting.naarRechts && x < BREEDTE - 1) {
+                x++;
             } else {
                 return;
             }
 
             //bepaal of je naar dat veld toe mag en wat er gebeurt als je daar op gaat staan
-            if (speelveld[positie.y][positie.x].getToeganklijk()) {            
-                speler.setPositie(positie);                
+            if (speelveld[y][x].getToeganklijk()) {            
+                speler.setPositie(x, y);                
                 speler.setGezetteStappen(speler.getGezetteStappen() + 1);
                 //als het volgende veld geen gewoon veld is, doe de speciale actie
-                if (!(speelveld[positie.y][positie.x].getClass().equals(Veld.class))) {
-                    ((SpeciaalVeld) speelveld[positie.y][positie.x]).doeSpecialeActie(speelveld, speler, this);
+                if (speelveld[y][x].getClass().equals(Veld.class) == false) {
+                    ((SpeciaalVeld) speelveld[y][x]).doeSpecialeActie(speler);
+                    //speciale dingen kan je maar één keer gebruiken dus vervang deze door een leeg veld als de speler er op is geweest
+                    speelveld[y][x] = new Veld(true);
                 }                
                 //geef een melding als de speler bij het eind van het level is of als zijn stappen op zijn
-                if (positie.equals(EIND)) {
+                if (x == EIND.x && y == EIND.y) {
                     JOptionPane.showOptionDialog(this, "Je hebt het doolhof uitgespeeld!", null, 0, 2, null, new String[]{"OK"}, 0);
                     resetLevel();
                 }
@@ -130,7 +133,8 @@ public class Level extends JComponent {
         return MAX_STAPPEN - speler.getGezetteStappen();
     }
     
-    public int getAantalBazookas() {
+    public int getSpelerZijnAantalBazookas() {
+        //geeft het aantal bazooka's van de speler (niet van het level)
         return speler.getAantalBazookas();
     }
     
@@ -138,10 +142,6 @@ public class Level extends JComponent {
         speler.setPositie(BEGIN);
         speler.setGezetteStappen(0);
         speler.setAantalBazookas(0);
-        this.repaint();
-    }
-    
-    public void verzoekRepaint() {
         this.repaint();
     }
 

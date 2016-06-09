@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
  *
  * @author Jorn
  */
-public class Helper extends SpeciaalVeld {
+public class Helper extends Veld implements SpeciaalVeld {
     //lijst met de velden die de optimale route vormen
     ArrayList<Veld> optimaleRoute = new ArrayList<>();
     
@@ -33,11 +33,8 @@ public class Helper extends SpeciaalVeld {
     }
     
     @Override
-    public void doeSpecialeActie(Veld[][] speelveld, Speler speler, Level level) {
-        BufferedImage veldAfbeelding;
-        //speciale dingen kan je maar één keer gebruiken dus vervang deze door een leeg veld als de speler er op is geweest 
-        speelveld[speler.getPositie().y][speler.getPositie().x] = new Veld(true);
-        
+    public void doeSpecialeActie(Speler speler) {
+        BufferedImage veldAfbeelding;        
         //van elk veld op de optimale route wordt de afbeelding opgehaald, aangepast en teruggezet
         //de afbeelding van het veld krijgt een rand in een kleur naar keuze
         for (Veld veld : optimaleRoute) {
@@ -59,7 +56,6 @@ public class Helper extends SpeciaalVeld {
             }
             veld.setAfbeelding(veldAfbeelding);
         }
-        level.verzoekRepaint();
     }
     
     public void setOptimaleRoute(ArrayList<Veld> optimaleRoute) {
