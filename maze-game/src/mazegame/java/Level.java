@@ -36,8 +36,8 @@ public class Level extends JComponent {
     private final Veld[][] speelveld = new Veld[HOOGTE][BREEDTE];
 
     public Level() {
-        speler = new Speler();
-        vriend = new Speler();
+        speler = new Speler("speler");
+        vriend = new Speler("vriend");
         ArrayList<Veld> optimaleRoute = new ArrayList<>();
         ArrayList<Helper> helpers = new ArrayList<>();
         for (int y=0; y<HOOGTE; y++) {

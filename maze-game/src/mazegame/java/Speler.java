@@ -24,9 +24,9 @@ public class Speler {
     private int gezetteStappen;
     private int bazookas;
     
-    public Speler() {
+    public Speler(String afbeelding) {
         try {
-            spelerAfbeelding = ImageIO.read(new File("src/mazegame/resources/images/speler.bmp"));
+            spelerAfbeelding = ImageIO.read(new File("src/mazegame/resources/images/" + afbeelding + ".bmp"));
         } catch (IOException ex) {
             Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
