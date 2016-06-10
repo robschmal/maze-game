@@ -1,4 +1,5 @@
 package mazegame.java;
+
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -18,7 +19,7 @@ import javax.imageio.ImageIO;
  */
 public class Speler {        
     private BufferedImage spelerAfbeelding;
-    private Positie positie = new Positie();
+    private int positieX, positieY;
     private Richting richting = Richting.omlaag;
     private int gezetteStappen;
     private int bazookas;
@@ -37,18 +38,18 @@ public class Speler {
         return new AffineTransformOp(rotatie, AffineTransformOp.TYPE_BILINEAR).filter(spelerAfbeelding, null);
     }
     
-    public void setPositie(Positie positie) {
-        this.positie = positie;
-    }
-    
     public void setPositie(int x, int y) {
-        positie.x = x;
-        positie.y = y;
+        positieX = x;
+        positieY = y;
     }
     
-    public Positie getPositie() {
-        return positie;
-    }       
+    public int getX() {
+        return positieX;
+    }
+    
+    public int getY() {
+        return positieY;
+    }
     
     public void setRichting(Richting richting) {
         this.richting = richting;

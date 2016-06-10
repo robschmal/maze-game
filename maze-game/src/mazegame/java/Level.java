@@ -7,8 +7,10 @@ import javax.swing.*;
 public class Level extends JComponent {
 
     private final int BREEDTE = 35, HOOGTE = 18, AFMETING = 35, MARGE = 10;
-    private final Positie BEGIN = new Positie(0, 0);
-    private final Positie EIND = new Positie(BREEDTE - 1, HOOGTE - 1);
+    private final int BEGIN_X = 0;
+    private final int BEGIN_Y = 0;
+    private final int EIND_X = BREEDTE - 1;
+    private final int EIND_Y = HOOGTE - 1;
     private final int MAX_STAPPEN = 70;
     private final int MAX_TIJD = 300;       
     private final String LEVEL =   "RRmmmmmmmmmmmmmmrrrmrrrrrrrrrrrrrrr"
@@ -30,10 +32,12 @@ public class Level extends JComponent {
                                  + "mmmmmmrmmmmmmmmmmRRRRRRRRmmmmmmmmmm"
                                  + "mmmmmmrrrrrrrrrrmmmmmmmmRRRRRRRRRRR";    
     private final Speler speler;
+    private final Speler vriend;
     private final Veld[][] speelveld = new Veld[HOOGTE][BREEDTE];
 
     public Level() {
         speler = new Speler();
+        vriend = new Speler();
         ArrayList<Veld> optimaleRoute = new ArrayList<>();
         ArrayList<Helper> helpers = new ArrayList<>();
         for (int y=0; y<HOOGTE; y++) {
@@ -64,15 +68,13 @@ public class Level extends JComponent {
                     break;                                               
                         
                     default:
-                        speelveld[y][x] = new Veld(false); //standaard een leeg veld waar je niet op mag
+                        speelveld[y][x] = new Veld(false); //een veld is standaard een leeg veld waar je niet op mag
                     break;                        
                 }                
             }
         }
         
-        //stel alle helpers op de hoogte van de optimale route
-        //kan pas aan het eind omdat dan de hele optimale route bekend is
-        //wat doorgegeven wordt zijn pointers naar de veld objecten in speelveld
+        //stel alle helpers op de hoogte van de gevonden optimale route
         for (Helper helper : helpers) {
             helper.setOptimaleRoute(optimaleRoute);
         }
@@ -81,10 +83,9 @@ public class Level extends JComponent {
     public void verplaatsSpeler(Richting richting) {
         //als de speler geen stappen meer mag zetten of als hij aan de rand van het level is gebeurt er niks
         if (speler.getGezetteStappen() < MAX_STAPPEN) {
-            int x = speler.getPositie().x;
-            int y = speler.getPositie().y;
+            int x = speler.getX(), y = speler.getY();
             
-            //bepaal je toekomstige positie mits er in de gewenste richting nog een veld is
+            //bepaal de speler zijn toekomstige positie
             if (richting == Richting.omhoog && y > 0) {
                 y--;
             } else if (richting == Richting.omlaag && y < HOOGTE - 1) {
@@ -97,7 +98,7 @@ public class Level extends JComponent {
                 return;
             }
 
-            //bepaal of je naar dat veld toe mag en wat er gebeurt als je daar op gaat staan
+            //bepaal of de speler naar dat veld toe mag en wat er gebeurt als hij daar op gaat staan
             if (speelveld[y][x].getToeganklijk()) {            
                 speler.setPositie(x, y);                
                 speler.setGezetteStappen(speler.getGezetteStappen() + 1);
@@ -108,7 +109,7 @@ public class Level extends JComponent {
                     speelveld[y][x] = new Veld(true);
                 }                
                 //geef een melding als de speler bij het eind van het level is of als zijn stappen op zijn
-                if (x == EIND.x && y == EIND.y) {
+                if (x == EIND_X && y == EIND_Y) {
                     JOptionPane.showOptionDialog(this, "Je hebt het doolhof uitgespeeld!", null, 0, 2, null, new String[]{"OK"}, 0);
                     resetLevel();
                 }
@@ -116,7 +117,7 @@ public class Level extends JComponent {
                     JOptionPane.showOptionDialog(this, "Je mag niet meer stappen zetten!", null, 0, 2, null, new String[]{"OK"}, 0);
                 } 
             }
-            //richting waarin je staat verandert altijd, ook als je niet naar dat veld toe kan
+            //richting waarin de speler staat verandert altijd, ook als hij niet naar dat veld toe kan
             //zo kan je je bazooka op een muur richting waar je al tegenaan staat
             speler.setRichting(richting);
             this.repaint();
@@ -124,8 +125,11 @@ public class Level extends JComponent {
     }
     
     public void schietBazooka() {
-        Bazooka.schietBazooka(speelveld, speler, BREEDTE, HOOGTE);
-        this.repaint();
+        if (speler.getAantalBazookas() > 0) {
+            speler.setAantalBazookas(speler.getAantalBazookas() - 1);
+            Bazooka.schietBazooka(speelveld, speler.getX(), speler.getY(), speler.getRichting(), BREEDTE, HOOGTE);
+            this.repaint();
+        }
     }
 
     public int getResterendeStappen() {
@@ -139,7 +143,8 @@ public class Level extends JComponent {
     }
     
     public void resetLevel() {
-        speler.setPositie(BEGIN);
+        speler.setPositie(BEGIN_X, BEGIN_Y);
+        vriend.setPositie(EIND_X, EIND_Y);
         speler.setGezetteStappen(0);
         speler.setAantalBazookas(0);
         this.repaint();
@@ -149,10 +154,15 @@ public class Level extends JComponent {
     public void paintComponent(Graphics g) {
         for (int y = 0; y < HOOGTE; y++) {
             for (int x = 0; x < BREEDTE; x++) {
-                if (y == speler.getPositie().y && x == speler.getPositie().x) {
+                if (y == speler.getY() && x == speler.getX()) {
                     //teken de afbeelding van de speler als op dit veld de speler staat
                     g.drawImage(speler.getAfbeelding(), x * AFMETING + MARGE, y * AFMETING, this);
-                } else {
+                }
+                else if (y == vriend.getY() && x == vriend.getX()) {
+                    //teken de afbeelding van de vriend als op dit veld de vriend staat
+                    g.drawImage(vriend.getAfbeelding(), x * AFMETING + MARGE, y * AFMETING, this);
+                }                
+                else {
                     //teken anders de afbeelding van het veld
                     g.drawImage(speelveld[y][x].getAfbeelding(), x * AFMETING + MARGE, y * AFMETING, this);
                 }                

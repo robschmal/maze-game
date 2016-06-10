@@ -33,59 +33,49 @@ public class Bazooka extends Veld implements SpeciaalVeld {
         speler.setAantalBazookas(speler.getAantalBazookas() + 1);
     }
     
-    //static functie zodat je deze op de klasse aan kan roepen
-    //een bazooka kan je immers pas later gebruiken als je al niet meer op het bazooka veld bent en geen bazooka object voorhanden hebt
-    static public void schietBazooka(Veld[][] velden, Speler speler, final int BREEDTE, final int HOOGTE) {
-        if (speler.getAantalBazookas() > 0) {                           //als de speler bazooka's heeft
-            int begin = 0, eind = 0, stap = 0;
-            Positie spelerPositie = speler.getPositie();                //variabele om niet steeds opnieuw speler.getPositie aan te hoeven roepen
-            speler.setAantalBazookas(speler.getAantalBazookas() - 1);   //verminder het aantal bazooka's van de speler met één
+    //static functie zodat deze op de klasse kan worden aangeroepen
+    //een bazooka kan pas later worden gebruikt als er geen bazooka object voorhanden is
+    static public void schietBazooka(Veld[][] velden, int x, int y, Richting richting, final int BREEDTE, final int HOOGTE) {        
+            int begin = 0, eind = 0, stap = 0;           
             
-            //bepaal begin en eind van de rij velden waarin je op en muur schiet
-            switch (speler.getRichting()) {
+            //bepaal begin en eind van de rij velden waarin de speler op een muur schiet
+            switch (richting) {
                 case omhoog:
-                    begin = spelerPositie.y - 1;        //y positie van de speler
+                    begin = y - 1;                      //y positie van de speler
                     eind = 0;                           //bovenkant van het speelveld
-                    stap = -1;                          //je schiet omhoog, dus y wordt minder
+                    stap = -1;                          //de speler schiet omhoog, dus y wordt minder
                 break;
                     
                 case omlaag:
-                    begin = spelerPositie.y + 1;        //y psoitie van de speler
+                    begin = y + 1;                      //y psoitie van de speler
                     eind = HOOGTE;                      //onderkant van het speelveld
-                    stap = 1;                           //je schiet omlaag, dus y wordt meer
+                    stap = 1;                           //de speler schiet omlaag, dus y wordt meer
                 break;
                     
                 case naarLinks:
-                    begin = spelerPositie.x - 1;        //x positie van de speler
+                    begin = x - 1;                      //x positie van de speler
                     eind = 0;                           //linkerkant van het speelveld
-                    stap = -1;                          //je schiet naar links, dus x wordt minder
+                    stap = -1;                          //de speler schiet naar links, dus x wordt minder
                 break;
                     
                 case naarRechts:
-                    begin = spelerPositie.x + 1;        //x positie van de speler
+                    begin = x + 1;                      //x positie van de speler
                     eind = BREEDTE;                     //rechterkant van het speelveld
-                    stap = 1;                           //je schiet naar rechts, dus x wordt meer
+                    stap = 1;                           //de speler schiet naar rechts, dus x wordt meer
                 break;                 
             }
             
             //ga deze rij velden af tot je een muur tegenkomt
-            //de loop stopt wanneer je bij een muur of één stap voorbij het eind bent (eind zelf moet ook worden bekeken)
+            //als je een veld tegenkomt dat niet toeganklijk is is dat een muur en wordt deze vervangen door een leeg veld
             for (int n=begin; n!=eind+stap; n+=stap) {
-                //als je omhoog of omlaag schiet verander je de y positie, x blijft constant
-                if ((speler.getRichting() == Richting.omhoog || speler.getRichting() == Richting.omlaag)
-                    && velden[n][spelerPositie.x].getToeganklijk() == false) {
-                    //als je een veld tegenkomt dat niet toeganklijk is dan is dat een muur en wordt deze vervangen door een leeg veld
-                    velden[n][spelerPositie.x] = new Veld(true);
+                if ((richting == Richting.omhoog || richting == Richting.omlaag) && velden[n][x].getToeganklijk() == false) {                    
+                    velden[n][x] = new Veld(true);
                     break;
                 }
-                //als je naar links of naar rechts schiet verander je de x positie, y blijft constant
-                else if ((speler.getRichting() == Richting.naarLinks || speler.getRichting() == Richting.naarRechts)
-                    && velden[spelerPositie.y][n].getToeganklijk() == false) {
-                    velden[spelerPositie.y][n] = new Veld(true);
+                else if ((richting == Richting.naarLinks || richting == Richting.naarRechts) && velden[y][n].getToeganklijk() == false) {
+                    velden[y][n] = new Veld(true);
                     break;
                 }
-            }
-            
+            }            
         }
-    }
 }
