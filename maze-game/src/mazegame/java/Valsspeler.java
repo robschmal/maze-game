@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
  * @author Jorn
  */
 public class Valsspeler extends Veld implements SpeciaalVeld {
-    int waarde = 10;
+    int waarde = 20;
     
     public Valsspeler() {
         super(true);  //een veld met een valsspeler is altijd toeganklijk
