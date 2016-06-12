@@ -12,25 +12,9 @@ public class Level extends JComponent {
     private final int EIND_X = BREEDTE - 1;
     private final int EIND_Y = HOOGTE - 1;
     private final int MAX_STAPPEN = 70;
-    private final int MAX_TIJD = 300;       
-    private final String LEVEL =   "RRmmmmmmmmmmmmmmrrrmrrrrrrrrrrrrrrr"
-                                 + "mRmmmmmmmrrrrrrrrmHmrmmmmmmmrmmmmmm"
-                                 + "mRRRRRRRmrmmmmrmmmrmrmmmrrrrrmmrrrm"
-                                 + "mrmmmmmRmrrBrmrrrrrmrmmmrmmmmmmrmmm"
-                                 + "mrrrrrmRmmmmrmmmmmmmrmmmrrrrrrrrmmm"
-                                 + "mmmmmrmRrrrrrmRRRRRrrmmmmmmmmrmmmmm"
-                                 + "mrrrmrmRmmmmmmRmmmRmmmmmmrrrrrmmmmm"
-                                 + "mrmrVrmRRRRRRRRmmmRRRRRmmrmmmmmmmmm"
-                                 + "mrmmmmmmmmmmmmmmmmmmmmRrrrrrrrrrrmm"
-                                 + "mrmrrrrrmmrrrrrrrrmmmmRmmmmmmmmmrmm"
-                                 + "mrmmmmmrmmrmmmmrmRRRRRRmmmmmmmmmrmm"
-                                 + "mrrrrrrrrrrmrrrrmRmmrmmmmrrrrrrrrmm"
-                                 + "mmmmmmmmmmmmrmmmmRmmrmmmmrmmmmmmrmm"
-                                 + "rrrrrrrrrrrmrrrrmRmmrrrrrrrrmmmmrmm"
-                                 + "rmmmmmmmmmrmmmmrmRmmmmmmmmmrmmmmrmm"
-                                 + "rrrrrrrmmmrrrrrrmRmmmmmmmmmrrrrrrmm"
-                                 + "mmmmmmrmmmmmmmmmmRRRRRRRRmmmmmmmmmm"
-                                 + "mmmmmmrrrrrrrrrrmmmmmmmmRRRRRRRRRRR";    
+    private final int MAX_TIJD = 300; 
+    private final LevelLayout levelLayout = new LevelLayout();
+    private String levelLayoutString = levelLayout.getLevelLayoutString(01);
     private final Speler speler;
     private final Speler vriend;
     private final Veld[][] speelveld = new Veld[HOOGTE][BREEDTE];
@@ -42,7 +26,7 @@ public class Level extends JComponent {
         ArrayList<Helper> helpers = new ArrayList<>();
         for (int y=0; y<HOOGTE; y++) {
             for (int x=0; x<BREEDTE; x++) {
-                switch (LEVEL.charAt((y * BREEDTE) + x)) {
+                switch (levelLayoutString.charAt((y * BREEDTE) + x)) {
                     case 'R':
                         //bij een hoofdletter r, voeg de positie van het veld toe aan de optimale route
                         speelveld[y][x] = new Veld(true);
