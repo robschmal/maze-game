@@ -16,12 +16,16 @@ public class Level extends JComponent {
     private final int MAX_STAPPEN = 70;
     private final int MAX_TIJD = 300; 
     private final LevelLayout levelLayout = new LevelLayout();
-    private String levelLayoutString = levelLayout.getLevelLayoutString(01);
+    //private String levelLayoutString = levelLayout.getLevelLayoutString(03);
     private final Speler speler;
     private final Speler vriend;
     private final Veld[][] speelveld = new Veld[HOOGTE][BREEDTE];
+    private int levelNumber = 01;
+    private String levelLayoutString;
 
-    public Level() {
+    public Level(int levelNumber) {
+        levelNumber = this.levelNumber;
+        levelLayoutString = levelLayout.getLevelLayoutString(levelNumber);
         speler = new Speler("speler");
         vriend = new Speler("vriend");
         ArrayList<Veld> optimaleRoute = new ArrayList<>();

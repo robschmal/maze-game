@@ -53,24 +53,24 @@ public class LevelLayout {
   
                 break;
             case 03: levelLayoutString
-                        = "rrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm"
-                        + "mrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
-                        + "mrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrm"
-                        + "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrr";
+                        = "rmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrr"
+                        + "rrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrm"
+                        + "mmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrm"
+                        + "rrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmr"
+                        + "rrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrm"
+                        + "mrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrr"
+                        + "rmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrr"
+                        + "rrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmm"
+                        + "mrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrr"
+                        + "rmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrr"
+                        + "rrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmm"
+                        + "mrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrr"
+                        + "rmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrr"
+                        + "rrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmm"
+                        + "mrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrr"
+                        + "rrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrm"
+                        + "rmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrr"
+                        + "rrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrm";
                 break;
         }
 

@@ -10,25 +10,30 @@ public class Maze {
     private static final int HEIGHT = 700;
     static JFrame frame = new JFrame("Maze game");
     static JPanel frameBovenin = new JPanel();
-    static JButton level01 = new JButton("Level 1");
-    static JButton level02 = new JButton("Level 2");
-    static JButton level03 = new JButton("Level 3");
+    static JButton buttonlevel01 = new JButton("Level 1");
+    static JButton buttonLevel02 = new JButton("Level 2");
+    static JButton buttonLevel03 = new JButton("Level 3");
     static JLabel stappen = new JLabel();
     static JLabel bazookas = new JLabel();
-    static Level[] levels = new Level[3];
-    static Level level = new Level();
+    static Level[] levels = new Level[4];
+    static Level currentLevel = new Level(01);
     
     public static void main(String[] args) {
-        levels[0] = new Level();
-        levels[1] = new Level();
-        levels[2] = new Level();        
-        level01.addActionListener(new ClickListener());
-        level02.addActionListener(new ClickListener());
-        level03.addActionListener(new ClickListener());
+        levels[0] = currentLevel;
+        Level level01 = new Level(01);
+        Level level02 = new Level(02);
+        Level level03 = new Level(03);
+        levels[0] = currentLevel;
+        levels[1] = level01;
+        levels[2] = level02;
+        levels[3] = level03;
+        buttonlevel01.addActionListener(new ClickListener());
+        buttonLevel02.addActionListener(new ClickListener());
+        buttonLevel03.addActionListener(new ClickListener());
         
-        frameBovenin.add(level01);
-        frameBovenin.add(level02);
-        frameBovenin.add(level03);
+        frameBovenin.add(buttonlevel01);
+        frameBovenin.add(buttonLevel02);
+        frameBovenin.add(buttonLevel03);
         frameBovenin.add(stappen);
         frameBovenin.add(bazookas);
        
@@ -43,14 +48,14 @@ public class Maze {
         frame.setLocationRelativeTo(null);
         frame.requestFocus();
         
-        level = levels[0];
-        level.resetLevel();
+        currentLevel = levels[0];
+        currentLevel.resetLevel();
         toonSpelerStatus();
         while(true) {}
     }
     
     static private void toonSpelerStatus() {
-        switch (level.getResterendeStappen()) {
+        switch (currentLevel.getResterendeStappen()) {
             case 0:
                 stappen.setText("  Je hebt geen stappen meer over!  ");
             break;
@@ -64,7 +69,7 @@ public class Maze {
             break;    
         }
         
-        switch (level.getSpelerZijnAantalBazookas()) {
+        switch (currentLevel.getSpelerZijnAantalBazookas()) {
             case 0:
                 bazookas.setText("Je hebt geen bazooka's");
             break;
@@ -83,16 +88,16 @@ public class Maze {
         
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == level01) {
-                                
+            if (e.getSource() == buttonlevel01) {
+                
             }
-            else if (e.getSource() == level02) {
+            else if (e.getSource() == buttonLevel02) {
                 
             }
             else {
                 
             }
-            level.resetLevel();
+            currentLevel.resetLevel();
             toonSpelerStatus();
             frame.requestFocus();
         }
@@ -108,7 +113,7 @@ public class Maze {
         @Override
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                level.schietBazooka();
+                currentLevel.schietBazooka();
             }
             else {
                 switch (e.getKeyCode()) {
@@ -128,7 +133,7 @@ public class Maze {
                         richting = Richting.naarRechts;                    
                     break;
                 }
-                level.verplaatsSpeler(richting);                
+                currentLevel.verplaatsSpeler(richting);                
             }
             toonSpelerStatus();
         }
