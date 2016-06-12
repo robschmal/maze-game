@@ -15,7 +15,7 @@ public class LevelLayout {
                         = "RRmmmmmmmmmmmmmmrrrmrrrrrrrrrrrrrrr"
                         + "mRmmmmmmmrrrrrrrrmHmrmmmmmmmrmmmmmm"
                         + "mRRRRRRRmrmmmmrmmmrmrmmmrrrrrmmrrrm"
-                        + "mrmmmmmRmrrBrmrrrrrmrmmmrmmmmmmrmmm"
+                        + "mrmmmmmRmrBBrmrrrrrmrmmmrmmmmmmrmmm"
                         + "mrrrrrmRmmmmrmmmmmmmrmmmrrrrrrrrmmm"
                         + "mmmmmrmRrrrrrmRRRRRrrmmmmmmmmrmmmmm"
                         + "mrrrmrmRmmmmmmRmmmRmmmmmmrrrrrmmmmm"
