@@ -1,5 +1,8 @@
 package mazegame.java;
 
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -15,6 +18,10 @@ import javax.imageio.ImageIO;
  * @author Jorn
  */
 public class Bazooka extends Veld implements SpeciaalVeld {
+    private static int n, eind, stap, positieX, positieY;
+    private static Richting richting;
+    private static boolean actief = false;
+    private static BufferedImage raketAfbeelding;
     
     public Bazooka() {
         super(true); //een veld met een bazooka is altijd toeganklijk
@@ -25,6 +32,14 @@ public class Bazooka extends Veld implements SpeciaalVeld {
         } catch (IOException ex) {
             Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //laad de afbeelding van een bazooka raket als dit nog niet gebeurd is
+        if (raketAfbeelding == null) {
+            try {
+                raketAfbeelding = ImageIO.read(new File("src/mazegame/resources/images/raket.bmp"));
+            } catch (IOException ex) {
+                Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        }
     }
     
     @Override
@@ -33,49 +48,88 @@ public class Bazooka extends Veld implements SpeciaalVeld {
         speler.setAantalBazookas(speler.getAantalBazookas() + 1);
     }
     
-    //static functie zodat deze op de klasse kan worden aangeroepen
-    //een bazooka kan pas later worden gebruikt als er geen bazooka object voorhanden is
-    static public void schietBazooka(Veld[][] velden, int x, int y, Richting richting, final int BREEDTE, final int HOOGTE) {        
-            int begin = 0, eind = 0, stap = 0;           
-            
-            //bepaal begin en eind van de rij velden waarin de speler op een muur schiet
-            switch (richting) {
-                case omhoog:
-                    begin = y - 1;                      //y positie van de speler
-                    eind = 0;                           //bovenkant van het speelveld
-                    stap = -1;                          //de speler schiet omhoog, dus y wordt minder
-                break;
-                    
-                case omlaag:
-                    begin = y + 1;                      //y psoitie van de speler
-                    eind = HOOGTE;                      //onderkant van het speelveld
-                    stap = 1;                           //de speler schiet omlaag, dus y wordt meer
-                break;
-                    
-                case naarLinks:
-                    begin = x - 1;                      //x positie van de speler
-                    eind = 0;                           //linkerkant van het speelveld
-                    stap = -1;                          //de speler schiet naar links, dus x wordt minder
-                break;
-                    
-                case naarRechts:
-                    begin = x + 1;                      //x positie van de speler
-                    eind = BREEDTE;                     //rechterkant van het speelveld
-                    stap = 1;                           //de speler schiet naar rechts, dus x wordt meer
-                break;                 
+    //static functies zodat deze op de klasse kunnen worden aangeroepen
+    //een bazooka zou pas later kunnen worden gebruikt als er geen bazooka object voorhanden is
+    static public void richtBazooka(int spelerPositieX, int spelerPositieY, Richting spelerRichting, int speelveldBreedte, int speelveldHoogte) {
+        int begin;            
+
+        //de raket van de bazooka begint op de plek waar de speler staat en vliegt in de richting waarin hij kijkt
+        positieX = spelerPositieX;
+        positieY = spelerPositieY;
+        richting = spelerRichting;
+
+        //bepaal het begin en eind van de rij velden waarin de speler schiet
+        switch (richting) {
+            case omhoog:
+                begin = positieY;                   //y positie van de speler
+                eind = 0;                           //bovenkant van het speelveld
+                stap = -1;                          //de speler schiet omhoog, dus y wordt minder
+            break;
+
+            case omlaag:
+                begin = positieY;                   //y positie van de speler
+                eind = speelveldHoogte;             //onderkant van het speelveld
+                stap = 1;                           //de speler schiet omlaag, dus y wordt meer
+            break;
+
+            case naarLinks:
+                begin = positieX;                   //x positie van de speler
+                eind = 0;                           //linkerkant van het speelveld
+                stap = -1;                          //de speler schiet naar links, dus x wordt minder
+            break;
+
+            default:
+                begin = positieX;                   //x positie van de speler
+                eind = speelveldBreedte;            //rechterkant van het speelveld
+                stap = 1;                           //de speler schiet naar rechts, dus x wordt meer
+            break;                 
+        }        
+        n = begin;                                  //teller die bijhoudt waar de raket is in de rij met velden
+        actief = true;                              //vlag die aangeeft dat de speler aan het schieten is
+    }
+    
+    static public void schietBazooka() {                             
+        if (actief) {
+            //ga de eerder bepaalde rij velden af
+            n += stap;
+
+            //als de speler omhoog of omlaag schiet gaat de y positie van de raket mee met de teller, anders de x positie
+            //de ander van de twee verandert niet
+            if (richting == Richting.omhoog || richting == Richting.omlaag) {                    
+                positieY = n;
             }
-            
-            //ga deze rij velden af tot je een muur tegenkomt
-            //als je een veld tegenkomt dat niet toeganklijk is is dat een muur en wordt deze vervangen door een leeg veld
-            for (int n=begin; n!=eind+stap; n+=stap) {
-                if ((richting == Richting.omhoog || richting == Richting.omlaag) && velden[n][x].getToeganklijk() == false) {                    
-                    velden[n][x] = new Veld(true);
-                    break;
-                }
-                else if ((richting == Richting.naarLinks || richting == Richting.naarRechts) && velden[y][n].getToeganklijk() == false) {
-                    velden[y][n] = new Veld(true);
-                    break;
-                }
-            }            
+            else if (richting == Richting.naarLinks || richting == Richting.naarRechts) {
+                positieX = n;
+            }
+
+            //als de raket voorbij de rand van het veld komt stopt het schieten van de bazooka
+            //of er wel of niet een muur wordt geraakt houdt het aanroepende level object bij omdat
+            //het veld dan moet worden aangepast en dat is iets dat het level doet
+            if (n == eind + stap) {
+                actief = false;
+            }
         }
+    }
+    
+    static public void stopBazooka() {
+        actief = false;
+    }
+    
+    static public boolean getActief() {
+        return actief;
+    }
+    
+    static public BufferedImage getRaketAfbeelding() {
+        AffineTransform rotatie = new AffineTransform();
+        rotatie.rotate(richting.ordinal() * 0.5 * Math.PI, raketAfbeelding.getWidth()/2, raketAfbeelding.getHeight()/2);
+        return new AffineTransformOp(rotatie, AffineTransformOp.TYPE_BILINEAR).filter(raketAfbeelding, null);
+    }
+    
+    static public int getX() {
+        return positieX;
+    }
+    
+    static public int getY() {
+        return positieY;
+    }
 }

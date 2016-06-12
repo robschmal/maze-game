@@ -1,6 +1,8 @@
 package mazegame.java;
 
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -111,8 +113,25 @@ public class Level extends JComponent {
     public void schietBazooka() {
         if (speler.getAantalBazookas() > 0) {
             speler.setAantalBazookas(speler.getAantalBazookas() - 1);
-            Bazooka.schietBazooka(speelveld, speler.getX(), speler.getY(), speler.getRichting(), BREEDTE, HOOGTE);
-            this.repaint();
+            Timer timer = new Timer(200, new timerEvent());
+            timer.setRepeats(false);            
+            Bazooka.richtBazooka(speler.getX(), speler.getY(), speler.getRichting(), BREEDTE, HOOGTE);
+            do {
+                Bazooka.schietBazooka();
+                if (Bazooka.getActief()) {
+                    //als de raket een muur raakt wordt de muur vervangen door een leeg veld en wordt de bazooka gestopt
+                    //zo niet dan wordt even gewacht en vliegt de raket verder
+                    if (speelveld[Bazooka.getY()][Bazooka.getX()].getToeganklijk() == false) {
+                        speelveld[Bazooka.getY()][Bazooka.getX()] = new Veld(true);
+                        Bazooka.stopBazooka();
+                    }
+                    else {
+                        timer.start();
+                        while (timer.isRunning()) {}
+                    }                    
+                }
+                this.update(this.getGraphics());
+            } while (Bazooka.getActief());            
         }
     }
 
@@ -142,6 +161,9 @@ public class Level extends JComponent {
                     //teken de afbeelding van de speler als op dit veld de speler staat
                     g.drawImage(speler.getAfbeelding(), x * AFMETING + MARGE, y * AFMETING, this);
                 }
+                else if (Bazooka.getActief() && y == Bazooka.getY() && x == Bazooka.getX()) {
+                    g.drawImage(Bazooka.getRaketAfbeelding(), x * AFMETING + MARGE, y * AFMETING, this);
+                }                
                 else if (y == vriend.getY() && x == vriend.getX()) {
                     //teken de afbeelding van de vriend als op dit veld de vriend staat
                     g.drawImage(vriend.getAfbeelding(), x * AFMETING + MARGE, y * AFMETING, this);
@@ -151,6 +173,13 @@ public class Level extends JComponent {
                     g.drawImage(speelveld[y][x].getAfbeelding(), x * AFMETING + MARGE, y * AFMETING, this);
                 }                
             }
+        }
+    }
+    
+    class timerEvent implements ActionListener {
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
         }
     }
 }
