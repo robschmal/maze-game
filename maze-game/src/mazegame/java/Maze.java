@@ -10,48 +10,30 @@ public class Maze {
     private static final int HEIGHT = 700;
     static JFrame frame = new JFrame("Maze game");
     static JPanel frameBovenin = new JPanel();
-    static JButton buttonlevel01 = new JButton("Level 1");
-    static JButton buttonLevel02 = new JButton("Level 2");
-    static JButton buttonLevel03 = new JButton("Level 3");
+    static JButton level1 = new JButton("Level 1");
+    static JButton level2 = new JButton("Level 2");
+    static JButton level3 = new JButton("Level 3");
     static JLabel stappen = new JLabel();
     static JLabel bazookas = new JLabel();
-<<<<<<< HEAD
     static JLabel tijd = new JLabel();
-    static Level level = new Level();
+    static Level speelveld = new Level();
     static Timer speeltijdTimer = new Timer(1000, new SpeeltijdTimerEvent());
     static boolean spelActief;
     
     public static void main(String[] args) {       
-        level01.addActionListener(new LevelKnop());
-        level02.addActionListener(new LevelKnop());
-        level03.addActionListener(new LevelKnop());
-=======
-    static Level[] levels = new Level[4];
-    static Level currentLevel = new Level(01);
-    
-    public static void main(String[] args) {
-        levels[0] = currentLevel;
-        Level level01 = new Level(01);
-        Level level02 = new Level(02);
-        Level level03 = new Level(03);
-        levels[0] = currentLevel;
-        levels[1] = level01;
-        levels[2] = level02;
-        levels[3] = level03;
-        buttonlevel01.addActionListener(new ClickListener());
-        buttonLevel02.addActionListener(new ClickListener());
-        buttonLevel03.addActionListener(new ClickListener());
->>>>>>> eac3b7e03ecc677ea8b54f293e73c93a4e787c2a
+        level1.addActionListener(new LevelKnop());
+        level2.addActionListener(new LevelKnop());
+        level3.addActionListener(new LevelKnop());
         
-        frameBovenin.add(buttonlevel01);
-        frameBovenin.add(buttonLevel02);
-        frameBovenin.add(buttonLevel03);
+        frameBovenin.add(level1);
+        frameBovenin.add(level2);
+        frameBovenin.add(level3);
         frameBovenin.add(stappen);
         frameBovenin.add(bazookas);
         frameBovenin.add(tijd);
        
         frame.add(frameBovenin, BorderLayout.NORTH);        
-        frame.add(level, BorderLayout.CENTER);
+        frame.add(speelveld, BorderLayout.CENTER);
         
         speeltijdTimer.setRepeats(true); 
         frame.addKeyListener(new PijltjesToets());
@@ -62,11 +44,6 @@ public class Maze {
         frame.setLocationRelativeTo(null);
         frame.requestFocus();
         
-<<<<<<< HEAD
-=======
-        currentLevel = levels[0];
-        currentLevel.resetLevel();
->>>>>>> eac3b7e03ecc677ea8b54f293e73c93a4e787c2a
         toonSpelerStatus();
         spelActief = true;
         speeltijdTimer.start();
@@ -74,7 +51,7 @@ public class Maze {
     }
     
     static private void toonSpelerStatus() {
-        switch (currentLevel.getResterendeStappen()) {
+        switch (speelveld.getResterendeStappen()) {
             case 0:
                 stappen.setText("    Je hebt geen stappen meer over!  ");
             break;
@@ -84,11 +61,11 @@ public class Maze {
             break;
                 
             default:
-                stappen.setText("    Je mag nog " + Integer.toString(level.getResterendeStappen()) + " stappen zetten  ");
+                stappen.setText("    Je mag nog " + Integer.toString(speelveld.getResterendeStappen()) + " stappen zetten  ");
             break;    
         }
         
-        switch (currentLevel.getSpelerZijnAantalBazookas()) {
+        switch (speelveld.getSpelerZijnAantalBazookas()) {
             case 0:
                 bazookas.setText("  Je hebt geen bazooka's  ");
             break;
@@ -98,12 +75,12 @@ public class Maze {
             break;
                 
             default:
-                bazookas.setText("  Je hebt " + Integer.toString(level.getSpelerZijnAantalBazookas()) + " bazooka's  ");
+                bazookas.setText("  Je hebt " + Integer.toString(speelveld.getSpelerZijnAantalBazookas()) + " bazooka's  ");
             break;
         }
         
-        if (level.getResterendeTijd() > 0) {
-            tijd.setText("  Je hebt nog " + Integer.toString(level.getResterendeTijd()) + " seconden de tijd  ");
+        if (speelveld.getResterendeTijd() > 0) {
+            tijd.setText("  Je hebt nog " + Integer.toString(speelveld.getResterendeTijd()) + " seconden de tijd  ");
         }
         else {
             tijd.setText("  Je tijd is om!  ");
@@ -114,29 +91,18 @@ public class Maze {
         
         @Override
         public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-            if (e.getSource() == level01) {
-                level.laadLevel(1);
+            if (e.getSource() == level1) {
+                speelveld.laadLevel(1);
             }
-            else if (e.getSource() == level02) {
-                level.laadLevel(2);
-=======
-            if (e.getSource() == buttonlevel01) {
-                
-            }
-            else if (e.getSource() == buttonLevel02) {
-                
->>>>>>> eac3b7e03ecc677ea8b54f293e73c93a4e787c2a
+            else if (e.getSource() == level2) {
+                speelveld.laadLevel(2);
             }
             else {
-                level.laadLevel(3);
+                speelveld.laadLevel(3);
             }
-<<<<<<< HEAD
-=======
-            currentLevel.resetLevel();
->>>>>>> eac3b7e03ecc677ea8b54f293e73c93a4e787c2a
-            toonSpelerStatus();
+            
             frame.requestFocus();
+            toonSpelerStatus();            
             spelActief = true;
             speeltijdTimer.restart();
         }
@@ -151,7 +117,6 @@ public class Maze {
         
         @Override
         public void keyPressed(KeyEvent e) {
-<<<<<<< HEAD
             if (spelActief &&
                 (e.getKeyCode() == KeyEvent.VK_SPACE ||
                  e.getKeyCode() == KeyEvent.VK_UP || 
@@ -161,23 +126,13 @@ public class Maze {
                 
                 spelActief = false;
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    level.schietBazooka();
+                   speelveld.schietBazooka();
                 }
                 else {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_UP:
                             richting = Richting.omhoog;
                         break;
-=======
-            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                currentLevel.schietBazooka();
-            }
-            else {
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_UP:
-                        richting = Richting.omhoog;
-                    break;
->>>>>>> eac3b7e03ecc677ea8b54f293e73c93a4e787c2a
 
                         case KeyEvent.VK_DOWN:
                             richting = Richting.omlaag;
@@ -191,16 +146,12 @@ public class Maze {
                             richting = Richting.naarRechts;                    
                         break;
                     }
-                    level.verplaatsSpeler(richting);                
+                    speelveld.verplaatsSpeler(richting);                
                 }
                 toonSpelerStatus();                
-                if (level.getResterendeStappen() > 0) {
+                if (speelveld.getResterendeStappen() > 0) {
                     spelActief = true;
                 }
-<<<<<<< HEAD
-=======
-                currentLevel.verplaatsSpeler(richting);                
->>>>>>> eac3b7e03ecc677ea8b54f293e73c93a4e787c2a
             }
         }
         
@@ -216,9 +167,9 @@ public class Maze {
         public void actionPerformed(ActionEvent e) {
             if (spelActief) {
                 spelActief = false;
-                level.setVerstrekenTijd(level.getVerstrekenTijd() + speeltijdTimer.getDelay() / 1000);
+                speelveld.setVerstrekenTijd(speelveld.getVerstrekenTijd() + speeltijdTimer.getDelay() / 1000);
                 toonSpelerStatus();
-                if (level.getResterendeTijd() > 0) {
+                if (speelveld.getResterendeTijd() > 0) {
                     spelActief = true;
                 }
             }

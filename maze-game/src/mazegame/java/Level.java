@@ -9,7 +9,6 @@ import javax.swing.*;
 
 public class Level extends JComponent {
     private final int BREEDTE = 35, HOOGTE = 18, AFMETING = 35, MARGE = 10;
-<<<<<<< HEAD
     private final int BEGIN_X = 0, BEGIN_Y = 0, EIND_X = BREEDTE-1, EIND_Y = HOOGTE-1;
     private final int MAX_STAPPEN = 70, MAX_TIJD = 60;    
     private final Speler speler;
@@ -17,25 +16,8 @@ public class Level extends JComponent {
     private final Veld[][] speelveld = new Veld[HOOGTE][BREEDTE];
     private int level;
     private int verstrekenTijd;
-=======
-    private final int BEGIN_X = 0;
-    private final int BEGIN_Y = 0;
-    private final int EIND_X = BREEDTE - 1;
-    private final int EIND_Y = HOOGTE - 1;
-    private final int MAX_STAPPEN = 70;
-    private final int MAX_TIJD = 300; 
-    private final LevelLayout levelLayout = new LevelLayout();
-    //private String levelLayoutString = levelLayout.getLevelLayoutString(03);
-    private final Speler speler;
-    private final Speler vriend;
-    private final Veld[][] speelveld = new Veld[HOOGTE][BREEDTE];
-    private int levelNumber = 01;
-    private String levelLayoutString;
->>>>>>> eac3b7e03ecc677ea8b54f293e73c93a4e787c2a
 
-    public Level(int levelNumber) {
-        levelNumber = this.levelNumber;
-        levelLayoutString = levelLayout.getLevelLayoutString(levelNumber);
+    public Level() {
         speler = new Speler("speler");
         vriend = new Speler("vriend");
         level = 1;
