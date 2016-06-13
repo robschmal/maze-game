@@ -17,14 +17,14 @@ import javax.imageio.ImageIO;
  *
  * @author Jorn
  */
-public class Speler {        
+public class Held {        
     private BufferedImage spelerAfbeelding;
     private int positieX, positieY;
     private Richting richting = Richting.omlaag;
     private int gezetteStappen;
     private int bazookas;
     
-    public Speler(String afbeelding) {
+    public Held(String afbeelding) {
         try {
             spelerAfbeelding = ImageIO.read(new File("src/mazegame/resources/images/" + afbeelding + ".bmp"));
         } catch (IOException ex) {

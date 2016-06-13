@@ -11,15 +11,15 @@ public class Level extends JComponent {
     private final int BREEDTE = 35, HOOGTE = 18, AFMETING = 35, MARGE = 10;
     private final int BEGIN_X = 0, BEGIN_Y = 0, EIND_X = BREEDTE-1, EIND_Y = HOOGTE-1;
     private final int MAX_STAPPEN = 70, MAX_TIJD = 60;    
-    private final Speler speler;
-    private final Speler vriend;
+    private final Held speler;
+    private final Held vriend;
     private final Veld[][] speelveld = new Veld[HOOGTE][BREEDTE];
     private int level;
     private int verstrekenTijd;
 
     public Level() {
-        speler = new Speler("speler");
-        vriend = new Speler("vriend");
+        speler = new Held("speler");
+        vriend = new Held("vriend");
         level = 1;
         laadLevel();
     }

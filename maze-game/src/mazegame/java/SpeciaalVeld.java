@@ -11,5 +11,5 @@ package mazegame.java;
  */
 public interface SpeciaalVeld {
     
-    public void doeSpecialeActie(Speler speler);
+    public void doeSpecialeActie(Held speler);
 }

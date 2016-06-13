@@ -43,7 +43,7 @@ public class Bazooka extends Veld implements SpeciaalVeld {
     }
     
     @Override
-    public void doeSpecialeActie(Speler speler) {
+    public void doeSpecialeActie(Held speler) {
         //verhoog het aantal bazookas van de speler met één
         speler.setAantalBazookas(speler.getAantalBazookas() + 1);
     }
