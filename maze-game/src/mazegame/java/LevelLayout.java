@@ -21,7 +21,7 @@ public class LevelLayout {
                         + "mrrrmrmRmmmmmmRmmmRmmmmmmrrrrrmmmmm"
                         + "mrmrVrmRRRRRRRRmmmRRRRRmmrmmmmmmmmm"
                         + "mrmmmmmmmmmmmmmmmmmmmmRrrrrrrrrrrmm"
-                        + "mrmrrrrrmmrrrrrrrrmmmmRmmmmmmmmmrmm"
+                        + "mrmrrrrrmmrrrrrrrVmmmmRmmmmmmmmmrmm"
                         + "mrmmmmmrmmrmmmmrmRRRRRRmmmmmmmmmrmm"
                         + "mrrrrrrrrrrmrrrrmRmmrmmmmrrrrrrrrmm"
                         + "mmmmmmmmmmmmrmmmmRmmrmmmmrmmmmmmrmm"
@@ -53,24 +53,24 @@ public class LevelLayout {
   
                 break;
             case 03: levelLayoutString
-                        = "rmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrr"
-                        + "rrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrm"
-                        + "mmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrm"
-                        + "rrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmr"
-                        + "rrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrm"
-                        + "mrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrr"
-                        + "rmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrr"
-                        + "rrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmm"
-                        + "mrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrr"
-                        + "rmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrr"
-                        + "rrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmm"
-                        + "mrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrr"
-                        + "rmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrr"
-                        + "rrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmm"
-                        + "mrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrr"
-                        + "rrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrm"
-                        + "rmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrr"
-                        + "rrrrmmrrrrmmrrrrmmrrrrmmrrrrmmrrrrm";
+                        = "rrmmmmmmmmmmmmmmmmmmmmmmrrrrrrrrmrm"
+                        + "mrrrrrrrrrrrmrrrrrmmrrrrrrmmrrmrmrm"
+                        + "mmmmmmmrrmmmmrmmmrmmrmrmmrmmrmmrmrm"
+                        + "mrrrrVrmrrrrrrrrmrrrrmrmmrmmrmmrmrm"
+                        + "mrmrrmrrmmrmmmmrmrmmrmrrrrmmrmmrmrm"
+                        + "mrrmrmmrrmrrrmmrmrmmrmmmmrmrrrrrmrm"
+                        + "mrmrrmmmrmmmrmrrmrmmrrrrmrmrmrmrmrm"
+                        + "rmrrmmrrrmmmrmrmmrmmmmmmmrmrrrmrmrm"
+                        + "mrrmrmrmmmrrrmrrrrmmBrrrrrmmmmmrmrm"
+                        + "mrmmrmrmmrrmmmmmmmmmmmmmmmmrrrrrmrm"
+                        + "mrmmrmrmmrmrrrrrVrrrrrrrrrrrmmmmmrm"
+                        + "mrmmrmrmrrmmmmmrrmmrrmmmmmmmmmrrmrm"
+                        + "mrmmrmrrrmmmmmmrrmmrrmmmmmrrrrrmmrm"
+                        + "mrmmrmmmrrrrrrrrrrrrrmmmrrrmmrrmmrm"
+                        + "mrmrrrrrrmmmrmmmmmmmmmmrrmrmmrmmmrm"
+                        + "mVmmmmmmmmrmmmrrrrrrrrrrmrrrmrrrmrm"
+                        + "mrrrrrrrrrrrrrrmmmrrmmrmrrmrrmrmmrm"
+                        + "mmmmmmmmmmmmmmrrrrmmrrrrrmmrmrrrrrr";
                 break;
         }
 
