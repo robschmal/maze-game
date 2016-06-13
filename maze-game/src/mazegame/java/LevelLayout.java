@@ -6,7 +6,7 @@ package mazegame.java;
  */
 public class LevelLayout {
 
-    public String getLevelLayoutString(int levelNumber) {
+    static public String getLevelLayoutString(int levelNumber) {
 
         String levelLayoutString = "";
 
