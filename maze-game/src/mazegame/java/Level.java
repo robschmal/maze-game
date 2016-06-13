@@ -11,14 +11,14 @@ public class Level extends JComponent {
     private final int BREEDTE = 35, HOOGTE = 18, AFMETING = 35, MARGE = 10;
     private final int BEGIN_X = 0, BEGIN_Y = 0, EIND_X = BREEDTE-1, EIND_Y = HOOGTE-1;
     private final int MAX_STAPPEN = 70, MAX_TIJD = 60;    
-    private final Held speler;
+    private final Held held;
     private final Held vriend;
     private final Veld[][] speelveld = new Veld[HOOGTE][BREEDTE];
     private int level;
     private int verstrekenTijd;
 
     public Level() {
-        speler = new Held("speler");
+        held = new Held("held");
         vriend = new Held("vriend");
         level = 1;
         laadLevel();
@@ -67,11 +67,11 @@ public class Level extends JComponent {
             helper.setOptimaleRoute(optimaleRoute);
         }
         
-        speler.setPositie(BEGIN_X, BEGIN_Y);
+        held.setPositie(BEGIN_X, BEGIN_Y);
         vriend.setPositie(EIND_X, EIND_Y);
-        speler.setGezetteStappen(0);
-        speler.setRichting(Richting.omlaag);
-        speler.setAantalBazookas(0);
+        held.setGezetteStappen(0);
+        held.setRichting(Richting.omlaag);
+        held.setAantalBazookas(0);
         verstrekenTijd = 0;
         this.repaint();
     }
@@ -81,15 +81,15 @@ public class Level extends JComponent {
         laadLevel();
     }    
     
-    public void verplaatsSpeler(Richting richting) {
-        //als de speler geen stappen meer mag zetten of als hij aan de rand van het level is gebeurt er niks
-        if (speler.getGezetteStappen() < MAX_STAPPEN && verstrekenTijd < MAX_TIJD) {
-            int x = speler.getX(), y = speler.getY();
-            //richting waarin de speler staat verandert altijd
+    public void verplaatsHeld(Richting richting) {
+        //als de held geen stappen meer mag zetten of als hij aan de rand van het level is gebeurt er niks
+        if (held.getGezetteStappen() < MAX_STAPPEN && verstrekenTijd < MAX_TIJD) {
+            int x = held.getX(), y = held.getY();
+            //richting waarin de held staat verandert altijd
             //zo kan hij de bazooka op een muur richting waar hij al tegenaan staat
-            speler.setRichting(richting);
+            held.setRichting(richting);
             
-            //bepaal de speler zijn toekomstige positie
+            //bepaal de held zijn toekomstige positie
             if (richting == Richting.omhoog && y > 0) {
                 y--;
             } else if (richting == Richting.omlaag && y < HOOGTE - 1) {
@@ -102,24 +102,24 @@ public class Level extends JComponent {
                 return;
             }
 
-            //bepaal of de speler naar dat veld toe mag en wat er gebeurt als hij daar op gaat staan
+            //bepaal of de held naar dat veld toe mag en wat er gebeurt als hij daar op gaat staan
             if (speelveld[y][x].getToeganklijk()) {            
-                speler.setPositie(x, y);                
-                speler.setGezetteStappen(speler.getGezetteStappen() + 1);
+                held.setPositie(x, y);                
+                held.setGezetteStappen(held.getGezetteStappen() + 1);
                 //als het volgende veld geen gewoon veld is, doe de speciale actie
                 if (speelveld[y][x].getClass().equals(Veld.class) == false) {
-                    ((SpeciaalVeld) speelveld[y][x]).doeSpecialeActie(speler);
-                    //speciale dingen kan je maar één keer gebruiken dus vervang deze door een leeg veld als de speler er op is geweest
+                    ((SpeciaalVeld) speelveld[y][x]).doeSpecialeActie(held);
+                    //speciale dingen kan je maar één keer gebruiken dus vervang deze door een leeg veld als de held er op is geweest
                     speelveld[y][x] = new Veld(true);
                 }                
-                //geef een melding als de speler bij het eind van het level is of als zijn stappen op zijn
+                //geef een melding als de held bij het eind van het level is of als zijn stappen op zijn
                 if (x == EIND_X && y == EIND_Y) {
                     JOptionPane.showOptionDialog(this, "Je hebt het doolhof uitgespeeld!", null, 0, 2, null, new String[]{"OK"}, 0);
-                    //als de speler het level heeft uitgespeeld gaat hij door naar het volgende of weer naar het eerste
+                    //als de held het level heeft uitgespeeld gaat hij door naar het volgende of weer naar het eerste
                     level = (level < 3? level++: 1);
                     laadLevel();
                 }
-                else if (speler.getGezetteStappen() == MAX_STAPPEN) {
+                else if (held.getGezetteStappen() == MAX_STAPPEN) {
                     JOptionPane.showOptionDialog(this, "Je mag niet meer stappen zetten!", null, 0, 2, null, new String[]{"OK"}, 0);
                 } 
             }
@@ -129,11 +129,11 @@ public class Level extends JComponent {
     }
     
     public void schietBazooka() {
-        if (speler.getAantalBazookas() > 0) {
-            speler.setAantalBazookas(speler.getAantalBazookas() - 1);
+        if (held.getAantalBazookas() > 0) {
+            held.setAantalBazookas(held.getAantalBazookas() - 1);
             Timer timer = new Timer(200, new BazookaTimer());
             timer.setRepeats(false);            
-            Bazooka.richtBazooka(speler.getX(), speler.getY(), speler.getRichting(), BREEDTE, HOOGTE);
+            Bazooka.richtBazooka(held.getX(), held.getY(), held.getRichting(), BREEDTE, HOOGTE);
             do {
                 Bazooka.schietBazooka();
                 if (Bazooka.getActief()) {
@@ -167,17 +167,17 @@ public class Level extends JComponent {
     }
     
     public int getResterendeStappen() {
-        //maximum stappen en resterende stappen is iets van het level, gezette stappen iets van de speler
-        return MAX_STAPPEN - speler.getGezetteStappen();
+        //maximum stappen en resterende stappen is iets van het level, gezette stappen iets van de held
+        return MAX_STAPPEN - held.getGezetteStappen();
     }
     
     public int getResterendeTijd() {
         return MAX_TIJD - verstrekenTijd;
     }
     
-    public int getSpelerZijnAantalBazookas() {
-        //geeft het aantal bazooka's van de speler (niet van het level)
-        return speler.getAantalBazookas();
+    public int getHeldZijnAantalBazookas() {
+        //geeft het aantal bazooka's van de held (niet van het level)
+        return held.getAantalBazookas();
     }
 
     @Override
@@ -185,9 +185,9 @@ public class Level extends JComponent {
         BufferedImage afbeelding;
         for (int y = 0; y < HOOGTE; y++) {
             for (int x = 0; x < BREEDTE; x++) {
-                if (y == speler.getY() && x == speler.getX()) {
-                    //teken de afbeelding van de speler als op dit veld de speler staat
-                    afbeelding = speler.getAfbeelding();
+                if (y == held.getY() && x == held.getX()) {
+                    //teken de afbeelding van de held als op dit veld de held staat
+                    afbeelding = held.getAfbeelding();
                 }
                 else if (Bazooka.getActief() && y == Bazooka.getY() && x == Bazooka.getX()) {
                     //teken de afbeelding van de bazooka raket als op dit veld een raket voorbij komt

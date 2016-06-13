@@ -17,21 +17,21 @@ import javax.imageio.ImageIO;
  * @author Jorn
  */
 public class Veld {
-    private boolean toeganklijk;
+    private boolean toegankelijk;
     protected BufferedImage afbeelding;
     
-    public Veld(boolean toeganklijk) {
-        this.toeganklijk = toeganklijk; //geeft aan of je op het veld mag staan of niet
+    public Veld(boolean toegankelijk) {
+        this.toegankelijk = toegankelijk; //geeft aan of je op het veld mag staan of niet
         
         //laad de afbeelding van een veld
         //wordt in overerverende klassen overnieuw gedaan
         try {
-            if (toeganklijk) {
-                //een toeganklijk veld zonder iets bijzonders is een leeg veld
+            if (toegankelijk) {
+                //een toegankelijk veld zonder iets bijzonders is een leeg veld
                 afbeelding = ImageIO.read(new File("src/mazegame/resources/images/veld.bmp"));
             }
             else {
-                //een ontoeganklijk veld is een muur
+                //een ontoegankelijk veld is een muur
                 afbeelding = ImageIO.read(new File("src/mazegame/resources/images/muur1.bmp"));
             }
         } catch (IOException ex) {
@@ -47,11 +47,11 @@ public class Veld {
         return afbeelding;
     } 
     
-    public void setToeganklijk(boolean toeganklijk) {
-        this.toeganklijk = toeganklijk;
+    public void setToeganklijk(boolean toegankelijk) {
+        this.toegankelijk = toegankelijk;
     }
     
     public boolean getToeganklijk() {
-        return toeganklijk;
+        return toegankelijk;
     }              
 }
