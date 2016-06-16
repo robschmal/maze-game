@@ -178,7 +178,7 @@ public class Level extends JComponent {
     public int getHeldZijnAantalBazookas() {
         //geeft het aantal bazooka's van de held (niet van het level)
         return held.getAantalBazookas();
-    }
+    }    
 
     @Override
     public void paintComponent(Graphics g) {
@@ -204,10 +204,8 @@ public class Level extends JComponent {
                 g.drawImage(afbeelding, x * AFMETING + MARGE, y * AFMETING, this);
             }
         }
-    }
-    
-    
-    
+    }        
+            
     class BazookaTimer implements ActionListener {
         
         @Override

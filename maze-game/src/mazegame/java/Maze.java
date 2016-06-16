@@ -87,6 +87,11 @@ public class Maze {
         }
     }
     
+    //nodig om te kunnen testen
+    static Level getLevel() {
+        return speelveld;
+    }
+    
     static class LevelKnop implements ActionListener {
         
         @Override
