@@ -65,7 +65,7 @@ public class Maze {
             break;    
         }
         
-        switch (speelveld.getSpelerZijnAantalBazookas()) {
+        switch (speelveld.getHeldZijnAantalBazookas()) {
             case 0:
                 bazookas.setText("  Je hebt geen bazooka's  ");
             break;
@@ -75,7 +75,7 @@ public class Maze {
             break;
                 
             default:
-                bazookas.setText("  Je hebt " + Integer.toString(speelveld.getSpelerZijnAantalBazookas()) + " bazooka's  ");
+                bazookas.setText("  Je hebt " + Integer.toString(speelveld.getHeldZijnAantalBazookas()) + " bazooka's  ");
             break;
         }
         
@@ -146,7 +146,7 @@ public class Maze {
                             richting = Richting.naarRechts;                    
                         break;
                     }
-                    speelveld.verplaatsSpeler(richting);                
+                    speelveld.verplaatsHeld(richting);                
                 }
                 toonSpelerStatus();                
                 if (speelveld.getResterendeStappen() > 0) {

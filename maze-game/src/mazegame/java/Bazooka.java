@@ -43,9 +43,9 @@ public class Bazooka extends Veld implements SpeciaalVeld {
     }
     
     @Override
-    public void doeSpecialeActie(Held speler) {
-        //verhoog het aantal bazookas van de speler met één
-        speler.setAantalBazookas(speler.getAantalBazookas() + 1);
+    public void doeSpecialeActie(Held held) {
+        //verhoog het aantal bazookas van de held met één
+        held.setAantalBazookas(held.getAantalBazookas() + 1);
     }
     
     //static functies zodat deze op de klasse kunnen worden aangeroepen
@@ -53,39 +53,39 @@ public class Bazooka extends Veld implements SpeciaalVeld {
     static public void richtBazooka(int spelerPositieX, int spelerPositieY, Richting spelerRichting, int speelveldBreedte, int speelveldHoogte) {
         int begin;            
 
-        //de raket van de bazooka begint op de plek waar de speler staat en vliegt in de richting waarin hij kijkt
+        //de raket van de bazooka begint op de plek waar de held staat en vliegt in de richting waarin hij kijkt
         positieX = spelerPositieX;
         positieY = spelerPositieY;
         richting = spelerRichting;
 
-        //bepaal het begin en eind van de rij velden waarin de speler schiet
+        //bepaal het begin en eind van de rij velden waarin de held schiet
         switch (richting) {
             case omhoog:
-                begin = positieY;                   //y positie van de speler
+                begin = positieY;                   //y positie van de held
                 eind = 0;                           //bovenkant van het speelveld
-                stap = -1;                          //de speler schiet omhoog, dus y wordt minder
+                stap = -1;                          //de held schiet omhoog, dus y wordt minder
             break;
 
             case omlaag:
-                begin = positieY;                   //y positie van de speler
+                begin = positieY;                   //y positie van de held
                 eind = speelveldHoogte;             //onderkant van het speelveld
-                stap = 1;                           //de speler schiet omlaag, dus y wordt meer
+                stap = 1;                           //de held schiet omlaag, dus y wordt meer
             break;
 
             case naarLinks:
-                begin = positieX;                   //x positie van de speler
+                begin = positieX;                   //x positie van de held
                 eind = 0;                           //linkerkant van het speelveld
-                stap = -1;                          //de speler schiet naar links, dus x wordt minder
+                stap = -1;                          //de held schiet naar links, dus x wordt minder
             break;
 
             default:
-                begin = positieX;                   //x positie van de speler
+                begin = positieX;                   //x positie van de held
                 eind = speelveldBreedte;            //rechterkant van het speelveld
-                stap = 1;                           //de speler schiet naar rechts, dus x wordt meer
+                stap = 1;                           //de held schiet naar rechts, dus x wordt meer
             break;                 
         }        
         n = begin;                                  //teller die bijhoudt waar de raket is in de rij met velden
-        actief = true;                              //vlag die aangeeft dat de speler aan het schieten is
+        actief = true;                              //vlag die aangeeft dat de held aan het schieten is
     }
     
     static public void schietBazooka() {                             
@@ -93,7 +93,7 @@ public class Bazooka extends Veld implements SpeciaalVeld {
             //ga de eerder bepaalde rij velden af
             n += stap;
 
-            //als de speler omhoog of omlaag schiet gaat de y positie van de raket mee met de teller, anders de x positie
+            //als de held omhoog of omlaag schiet gaat de y positie van de raket mee met de teller, anders de x positie
             //de ander van de twee verandert niet
             if (richting == Richting.omhoog || richting == Richting.omlaag) {                    
                 positieY = n;

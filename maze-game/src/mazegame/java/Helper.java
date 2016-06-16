@@ -33,7 +33,7 @@ public class Helper extends Veld implements SpeciaalVeld {
     }
     
     @Override
-    public void doeSpecialeActie(Held speler) {
+    public void doeSpecialeActie(Held held) {
         BufferedImage veldAfbeelding;        
         //van elk veld op de optimale route wordt de afbeelding opgehaald, aangepast en teruggezet
         //de afbeelding van het veld krijgt een rand in een kleur naar keuze
