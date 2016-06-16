@@ -108,8 +108,7 @@ public class Maze {
         }
     }
     
-    static class PijltjesToets implements KeyListener {
-        Richting richting;
+    static class PijltjesToets implements KeyListener {        
         @Override
         public void keyReleased(KeyEvent e) {
             
@@ -124,6 +123,7 @@ public class Maze {
                  e.getKeyCode() == KeyEvent.VK_LEFT || 
                  e.getKeyCode() == KeyEvent.VK_RIGHT)) {
                 
+                Richting richting = Richting.omhoog;
                 spelActief = false;
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                    speelveld.schietBazooka();

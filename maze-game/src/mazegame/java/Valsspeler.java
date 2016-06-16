@@ -1,3 +1,4 @@
+
 package mazegame.java;
 
 import java.io.File;
