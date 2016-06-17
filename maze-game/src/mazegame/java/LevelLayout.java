@@ -37,19 +37,19 @@ public class LevelLayout {
                         + "rrrmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmrm"
                         + "mrmmrrrrrrrrrrrrrrrrrrrrBrmrrrrrmrm"
                         + "mrmrrmmmmmmmmmmmmmmmmmmmmmmrmmmrmrm"
-                        + "mrmrmmrrrrrrrrrrrrrrrrrrrHmrmrmrmrm"
+                        + "mrmrmmrrrrrrrrrrrrrrrrrrrrmrmrmrmrm"
                         + "mrmrmrVmmmmmmmmmmmmmmmmmmrmrmrmrmrm"
                         + "mrmrmrmmrrrrrrrrrrrrrrrrrVmBmrmrmrm"
                         + "mrmrmrmrVmmmmmmmmmmmmmmmmmmmmrmrmrm"
-                        + "mrmrmrmrmmrrrrrrrrrrrrVrrrrrrrmrmrm"
-                        + "mrmrmrmrmrrmmmmmrmrrrrmrmmmrmrmrmrm"
+                        + "mrmrmrmrmmrrrrrrrrrrrrrrrrrrrrmrmrm"
+                        + "mrmrmrmrmrrmmmmmVmrrrrmrmmmrmrmrmrm"
                         + "mrmrmrmrmrmmrrmrrmmrmmmrmrrrmrmrmrm"
                         + "mrmrmrmrrrrrrrrrrrrrmrmrmrmmmrmrmrm"
                         + "mrmrmrmmmmmmmmmmmmmmmrmrmrrrrrmrrrm"
                         + "mrmrmrrrrrrrrrrrrrrrrrmrmmmmmmmmmmm"
                         + "mrmrmmmmmmmmmmmmmmmmmrmrrrrrrrrrrrr"
                         + "mrrrrrrrrrrrrrrrrrrrrrmmmrmmmmmmmmr"
-                        + "mmmmmmmmmmmmmmmmmmmmmmmmmrrrrrrrrrr";
+                        + "mmmmmmmmmmmmmmmmmmmmmmmHmrrrrrrrrrr";
   
                 break;
             case 03: levelLayoutString
@@ -62,14 +62,14 @@ public class LevelLayout {
                         + "mrmrrmmmrmmmrmrrmrmmrrrrmrmrmrmrmrm"
                         + "rmrrmmrrrmmmrmrmmrmmmmmmmrmrrrmrmrm"
                         + "mrrmrmrmmmrrrmrrrrmmBrrrrrmmmmmrmrm"
-                        + "mrmmrmrmmrrmmmmmmmmmmmmmmmmrrrrrmrm"
-                        + "mrmmrmrmmrmrrrrrVrrrrrrrrrrrmmmmmrm"
+                        + "mrmmBmrmmrrmmmmmmmmmmmmmmmmrrrrrmrm"
+                        + "mrmmrmrmmrmrrrrrrVrrrrrrrrrrmmmmmrm"
                         + "mrmmrmrmrrmmmmmrrmmrrmmmmmmmmmrrmrm"
-                        + "mrmmrmrrrmmmmmmrrmmrrmmmmmrrrrrmmrm"
-                        + "mrmmrmmmrrrrrrrrrrrrrmmmrrrmmrrmmrm"
+                        + "mrmmrrrrrmmmmmmrrmmrrmmHmmrrrrrmmrm"
+                        + "mrmmrmmmrrrrrrrrrVrrrmmmrrrmmrrmmrm"
                         + "mrmrrrrrrmmmrmmmmmmmmmmrrmrmmrmmmrm"
-                        + "mVmmmmmmmmrmmmrrrrrrrrrrmrrrmrrrmrm"
-                        + "mrrrrrrrrrrrrrrmmmrrmmrmrrmrrmrmmrm"
+                        + "mrmmmmmmmmrmmmrrrrrrrrrrmrrrmrrrmrm"
+                        + "mVrrrrrrrrrrrrrmmmrrmmrmrrmrrmrmmrm"
                         + "mmmmmmmmmmmmmmrrrrmmrrrrrmmrmrrrrrr";
                 break;
         }
